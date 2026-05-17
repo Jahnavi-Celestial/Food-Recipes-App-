@@ -42,6 +42,10 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
-  }
+    "experimentalDecorators": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true
+  },
+  "exclude": ["node_modules"],
+	"include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }

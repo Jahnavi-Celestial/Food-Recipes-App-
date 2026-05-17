@@ -2,14 +2,16 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "node -r dotenv/config -r ts-node/register node_modules/.bin/node-pg-migrate -j ts",
+    "dev": "npx nodemon --watch './**/*.ts' --exec 'npx tsx app.ts'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
@@ -19,6 +21,7 @@
     "node-pg-migrate": "^8.0.4",
     "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2",
+    "ts-node": "^10.9.2",
     "typeorm": "^0.3.29"
   },
   "devDependencies": {
@@ -26,6 +29,7 @@
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.22.1",
     "typescript": "^6.0.3"
   }
 }
