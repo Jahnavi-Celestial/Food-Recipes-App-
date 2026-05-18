@@ -1,4 +1,3 @@
-import { Unique } from "typeorm"
 
 export const up = (pgm) => {
     pgm.createTable("users",{
