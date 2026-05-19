@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { SavedRecipe } from "./SavedRecipe.ts";
 
 
@@ -24,5 +24,6 @@ export class Note{
 
     @Field(()=>[SavedRecipe])
     @ManyToOne(()=>SavedRecipe, (sr)=> sr.notes,{cascade: true, eager: true, onDelete: 'CASCADE'})
+    @JoinColumn({ name: "saved_recipe_id" })
     saved_recipe!: SavedRecipe
 }

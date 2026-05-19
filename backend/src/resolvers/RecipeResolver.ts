@@ -3,6 +3,8 @@ import { Recipe } from "../entity/Recipes.ts";
 import { AppDataSource } from "../config/db.ts";
 import { Ingredient } from "../entity/Ingredient.ts";
 import { SavedRecipe } from "../entity/SavedRecipe.ts";
+import { Tag } from "../entity/Tag.ts";
+import { Note } from "../entity/Note.ts";
 
 @Resolver()
 export class RecipeResolver{
@@ -64,11 +66,13 @@ export class RecipeResolver{
             user_id: context.userId,
         });
 
-        const ingEntity = ingredients.map(name=>ingRepo.create({name, recipe_id: recipe.id}))
+        const newRecipe = await recipeRepo.save(recipe);
+
+        const ingEntity = ingredients.map(name=>ingRepo.create({name, recipe_id: newRecipe.id}))
 
         await ingRepo.save(ingEntity);
 
-        return recipeRepo.save(recipe);
+        return newRecipe
     }
 
     @Mutation(() => String)
@@ -184,5 +188,129 @@ export class RecipeResolver{
         await recipeRepo.delete(existing.id);
         
         return "Recipe Unsaved"
+    }
+
+    @Mutation(()=> String)
+    async addNote(
+        @Arg("saved_recipe_id", ()=>Number) saved_recipe_id: number,
+        @Arg("note", ()=> String) note: string,
+        @Ctx() context: any 
+    ){
+        const savedRecipeRepo = AppDataSource.getRepository(SavedRecipe);
+        const noteRepo = AppDataSource.getRepository(Note);
+
+        if(!context.userId){
+            throw new Error ("Unauthorized")
+        }
+
+        const saved = await savedRecipeRepo.findOne({
+            where: {id: saved_recipe_id}
+        })
+
+        if(!saved) throw new Error("Saved recipe not found")
+
+        if(saved.user_id !== context.userId){
+            throw new Error("Not allowed");
+        }
+
+        const newNote = noteRepo.create({
+            note,
+            saved_recipe_id: saved_recipe_id
+        })
+
+        await noteRepo.save(newNote);
+        return "Note added successfully"
+    }
+
+    @Mutation(()=> String)
+    async updateNote(
+        @Arg("id", ()=>Number) id: number,
+        @Arg("note", ()=> String) note: string,
+        @Ctx() context: any 
+    ){
+        const savedRecipeRepo = AppDataSource.getRepository(SavedRecipe);
+        const noteRepo = AppDataSource.getRepository(Note);
+
+        if(!context.userId){
+            throw new Error ("Unauthorized")
+        }
+
+        const existingNote =  await noteRepo.findOne({where: {id: id}})
+
+        if(!existingNote) throw new Error("note not found")
+
+        const saved = await savedRecipeRepo.findOne({
+            where: {id: existingNote.saved_recipe_id}
+        })
+
+        if(!saved) throw new Error("Saved recipe not found")
+
+        if(saved.user_id !== context.userId){
+            throw new Error("Not allowed");
+        }
+
+        existingNote.note = note;
+
+        await noteRepo.save(existingNote)
+        return "Note updated successfully"
+    }
+
+    @Mutation(()=>String)
+    async deleteNote(
+        @Arg("id", ()=>Number) id: number,
+        @Ctx() context: any 
+    ){
+        const savedRecipeRepo = AppDataSource.getRepository(SavedRecipe);
+        const noteRepo = AppDataSource.getRepository(Note);
+
+        if(!context.userId){
+            throw new Error ("Unauthorized")
+        }
+
+        const note =  await noteRepo.findOne({where: {id: id}})
+
+        if(!note) throw new Error("note not found")
+
+        const saved = await savedRecipeRepo.findOne({
+            where: {id: note.saved_recipe_id}
+        })
+
+        if(!saved) throw new Error("Saved recipe not found")
+
+        if(saved.user_id !== context.userId){
+            throw new Error("Not allowed");
+        }
+
+        await noteRepo.delete(id)
+
+        return "Note deleted"
+    }
+
+    @Query(()=>[Note])
+    async notesBySavedRecipe(
+        @Arg("saved_recipe_id", ()=>Number) saved_recipe_id: number,
+        @Ctx() context: any 
+    ){
+        const savedRecipeRepo = AppDataSource.getRepository(SavedRecipe);
+        const noteRepo = AppDataSource.getRepository(Note);
+
+        if(!context.userId){
+            throw new Error ("Unauthorized")
+        }
+
+        const saved = await savedRecipeRepo.findOne({
+            where: {id: saved_recipe_id}
+        }) 
+
+        if(!saved) throw new Error("Saved recipe not found")
+
+        if(saved.user_id !== context.userId){
+            throw new Error("Not allowed");
+        }
+
+        return noteRepo.find({
+            where: {saved_recipe_id},
+            order: {created_at: "desc"}
+        })
     }
 }
