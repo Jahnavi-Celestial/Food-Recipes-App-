@@ -48,12 +48,12 @@ export class Recipe{
     @JoinColumn({name: "user_id"})
     user!: User;
 
-    @Field(() => [Ingredient])
+    @Field(() => [Ingredient], {nullable: true})
     @OneToMany(()=>Ingredient, ing => ing.recipe)
     ingredients!: Ingredient[]
 
     @Field(() => [Tag])
-    @ManyToMany(()=>Tag, {cascade: true, eager: true})
+    @ManyToMany(()=>Tag, {cascade: true})
     @JoinTable({name : "recipe_tags"})
     tags!: Tag[]
 

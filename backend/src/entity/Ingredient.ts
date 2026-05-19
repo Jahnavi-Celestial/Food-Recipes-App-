@@ -15,16 +15,8 @@ export class Ingredient{
     name!: string
 
     @Field(()=>Number)
-    @Column({type: "number"})
+    @Column({type: "int"})
     recipe_id!: number
-
-    @Field(()=>Date)
-    @Column({type: "timestamp", default: ()=> "CURRENT_TIMESTAMP"})
-    created_at?: Date;
-
-    @Field(()=>Number, {nullable: true})
-    @Column({type: "number", nullable: true})
-    note_id!: number
 
     @ManyToMany(()=>Recipe, recipe=>recipe.ingredients, {cascade: true, eager: true})
     recipe!: Recipe

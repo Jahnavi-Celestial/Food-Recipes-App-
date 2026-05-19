@@ -1,8 +1,8 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./User.ts";
 import { Recipe } from "./Recipes.ts";
-
+import { Note } from "./Note.ts";
 
 @ObjectType()
 @Entity("saved_recipes")
@@ -12,20 +12,25 @@ export class SavedRecipe{
     id!: number;
 
     @Field(()=>Number)
-    @Column({type: "number"})
+    @Column({type: "int"})
     user_id!: number
 
     @Field(()=>Number)
-    @Column({type: "number"})
+    @Column({type: "int"})
     recipe_id!: number
 
     @Field(()=>Date)
     @Column({type: "timestamp", default: ()=> "CURRENT_TIMESTAMP"})
     created_at?: Date;
 
-    @ManyToOne(()=>User, user=>user.savedRecipes, {cascade: true, eager: true, onDelete: "CASCADE"})
+    @ManyToOne(()=>User, user=>user.savedRecipes, {onDelete: "CASCADE"})
+    @JoinColumn({name: "user_id"})
     user!: User 
 
-    @ManyToOne(()=>Recipe, recipe=>recipe.savedBy, {cascade: true, eager: true, onDelete: 'CASCADE'})
+    @ManyToOne(()=>Recipe, recipe=>recipe.savedBy, {onDelete: 'CASCADE'})
+    @JoinColumn({name: "recipe_id"})
     recipe!: Recipe 
+
+    @OneToMany(()=>Note, (note)=>note.saved_recipe)
+    notes!: Note[]
 }

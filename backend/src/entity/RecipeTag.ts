@@ -10,10 +10,10 @@ export class RecipeTags{
     id!: number;
 
     @Field(()=>Number)
-    @Column({type: "number"})
+    @Column({type: "int"})
     tag_id!: number;
 
     @Field(()=>Number)
-    @Column({type: "number"})
+    @Column({type: "int"})
     recipe_id!: number;
 }

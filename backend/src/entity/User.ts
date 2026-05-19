@@ -44,11 +44,9 @@ export class User {
     @Column({type: "timestamp", default: ()=> "CURRENT_TIMESTAMP"})
     updated_at?: Date;
 
-    @Field(()=> [Recipe])
     @OneToMany(()=> Recipe, recipe => recipe.user, {cascade: true, eager: true})
     recipes!: Recipe[]
 
-    @Field(()=> [SavedRecipe])
     @OneToMany(()=> SavedRecipe, sr => sr.user, {cascade: true, eager: true})
     savedRecipes!: SavedRecipe[]
 }

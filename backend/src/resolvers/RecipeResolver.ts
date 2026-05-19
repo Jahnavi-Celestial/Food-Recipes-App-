@@ -76,7 +76,7 @@ export class RecipeResolver{
         @Arg("id", ()=>Number) id: number,
         @Arg("title", ()=>String) title: string,
         @Arg("description", ()=>String) description: string,
-        @Arg("cooking_time", ()=>String) cooking_time: number,
+        @Arg("cooking_time", ()=>Number) cooking_time: number,
         @Arg("image", ()=>String) image: string,
         @Arg("is_public", ()=>Boolean) is_public: boolean,
         @Arg("ingredients", ()=>[String]) ingredients: string[],
@@ -85,13 +85,13 @@ export class RecipeResolver{
         const recipeRepo = AppDataSource.getRepository(Recipe);
         const ingRepo = AppDataSource.getRepository(Ingredient);
 
+        if(!context.userId){
+            throw new Error("Not authorized")
+        }
+
         let recipe = await recipeRepo.findOne({where: {id}})
 
         if(!recipe) throw new Error("Not found")
-
-        if(recipe.user_id !== context.userId){
-            throw new Error("Not authorized")
-        }
 
         recipe = {
             ...recipe, title, description, cooking_time, image, is_public
@@ -113,19 +113,19 @@ export class RecipeResolver{
     }
 
     @Mutation(() => String)
-    async DeleteRecipe(
+    async deleteRecipe(
         @Arg("id", ()=>Number) id: number,
         @Ctx() context: any
     ){
         const recipeRepo = AppDataSource.getRepository(Recipe);
 
+        if(!context.userId){
+            throw new Error ("Unauthorized")
+        }
+
         let recipe = await recipeRepo.findOne({where: {id}})
 
         if(!recipe) throw new Error("Not found")
-
-        if(recipe.user_id !== context.userId){
-            throw new Error("Not authorized")
-        }
 
         await recipeRepo.delete(id);
 

@@ -14,6 +14,6 @@ export class Tag{
     @Column({type: "text", unique: true})
     name!: string
 
-    @ManyToMany(()=>Recipe, recipe=>recipe.tags, {cascade: true, eager: true})
+    @ManyToMany(()=>Recipe, recipe=>recipe.tags, {eager: true})
     recipes!: Recipe[]
 }
