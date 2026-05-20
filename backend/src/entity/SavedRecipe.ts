@@ -27,7 +27,7 @@ export class SavedRecipe{
     @JoinColumn({name: "user_id"})
     user!: User 
 
-    @ManyToOne(()=>Recipe, recipe=>recipe.savedBy, {onDelete: 'CASCADE'})
+    @ManyToOne(()=>Recipe, recipe=>recipe.savedBy, {onDelete: 'CASCADE', eager: true})
     @JoinColumn({name: "recipe_id"})
     recipe!: Recipe 
 

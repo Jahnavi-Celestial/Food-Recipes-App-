@@ -44,19 +44,28 @@ export class Recipe{
     @Column({type: "timestamp", default: ()=> "CURRENT_TIMESTAMP"})
     updated_at?: Date;
 
-    @ManyToOne(()=>User, user=>user.recipes)
+    @ManyToOne(()=>User, user=>user.recipe)
     @JoinColumn({name: "user_id"})
     user!: User;
 
     @Field(() => [Ingredient], {nullable: true})
-    @OneToMany(()=>Ingredient, ing => ing.recipe)
+    @OneToMany(()=>Ingredient, ing => ing.recipe, {cascade: true, eager: true})
     ingredients!: Ingredient[]
 
     @Field(() => [Tag])
-    @ManyToMany(()=>Tag, {cascade: true})
-    @JoinTable({name : "recipe_tags"})
+    @ManyToMany(()=>Tag, {cascade: true, eager: true})
+    @JoinTable({name : "recipe_tags",
+        joinColumn:{
+            name: "recipe_id",
+            referencedColumnName: "id",
+        },
+        inverseJoinColumn:{
+            name: "tag_id",
+            referencedColumnName: "id"
+        }
+    })
     tags!: Tag[]
 
-    @OneToMany(()=>SavedRecipe, sr=>sr.recipe, {cascade: true, eager: true})
+    @OneToMany(()=>SavedRecipe, sr=>sr.recipe)
     savedBy!: SavedRecipe[]
 }

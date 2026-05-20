@@ -45,7 +45,7 @@ export class User {
     updated_at?: Date;
 
     @OneToMany(()=> Recipe, recipe => recipe.user, {cascade: true, eager: true})
-    recipes!: Recipe[]
+    recipe!: Recipe[]
 
     @OneToMany(()=> SavedRecipe, sr => sr.user, {cascade: true, eager: true})
     savedRecipes!: SavedRecipe[]

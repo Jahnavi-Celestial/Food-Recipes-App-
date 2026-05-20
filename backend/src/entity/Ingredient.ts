@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Recipe } from "./Recipes.ts";
 
 
@@ -14,11 +14,8 @@ export class Ingredient{
     @Column({type: "text"})
     name!: string
 
-    @Field(()=>Number)
-    @Column({type: "int"})
-    recipe_id!: number
-
-    @ManyToMany(()=>Recipe, recipe=>recipe.ingredients, {cascade: true, eager: true})
+    @ManyToOne(()=>Recipe, recipe=>recipe.ingredients, {onDelete: "CASCADE"})
+    @JoinColumn({name: "recipe_id"})
     recipe!: Recipe
 
 }
