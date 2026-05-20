@@ -1,9 +1,10 @@
 import {ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from} from '@apollo/client';
 import {onError} from '@apollo/client/link/error';
+import GetRecipe from './components/GetRecipe';
 
-const errorLink = onError(({graphqlError, networkError}) => {
+const errorLink = onError(({graphqlError}) => {
   if(graphqlError){
-    graphqlError.map(({message, location, path}) => {
+    graphqlError.map(({message}) => {
       alert(`Graphql error ${message}`);
     })
   }
@@ -22,7 +23,7 @@ const client = new ApolloClient({
 
 function App(){
   return <ApolloProvider client={client}>
-
+    <GetRecipe/>
   </ApolloProvider>
 }
 
