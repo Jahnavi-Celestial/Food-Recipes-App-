@@ -3,7 +3,7 @@ import { LOAD_RECIPES } from '../GraphqQL/Query';
 import { useEffect } from "react";
 
 const GetRecipe = () => {
-    const { data } = useQuery(LOAD_RECIPES)
+    const { error, loading, data } = useQuery(LOAD_RECIPES)
 
     useEffect(()=>{
         if(data) console.log(data);
