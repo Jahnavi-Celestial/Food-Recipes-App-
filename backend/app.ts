@@ -6,10 +6,15 @@ import { buildSchema } from "type-graphql";
 import { authMiddleware, AuthReq } from "./src/middleware/authMiddleware.ts";
 import { UserResolver } from "./src/resolvers/UserResolver.ts"
 import { RecipeResolver } from "./src/resolvers/RecipeResolver.ts"
+import cors  from "cors";
 
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+  origin: "http://localhost: "
+}))
 
 app.use(express.json());
 app.use(authMiddleware);
