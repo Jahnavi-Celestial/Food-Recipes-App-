@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "node -r dotenv/config -r ts-node/register node_modules/.bin/node-pg-migrate -j ts",
-    "dev": "npx nodemon --watch './**/*.ts' --exec 'npx tsx app.ts'"
+    "dev": "npx nodemon --watch './**/*.ts' --exec 'npx tsx app.ts'",
+    "seed": "npx tsx ./seed/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -26,10 +27,12 @@
     "reflect-metadata": "^0.2.2",
     "ts-node": "^10.9.2",
     "type-graphql": "^2.0.0-rc.3",
-    "typeorm": "^0.3.29"
+    "typeorm": "^0.3.29",
+    "typeorm-extension": "^3.9.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
     "ts-node-dev": "^2.0.0",

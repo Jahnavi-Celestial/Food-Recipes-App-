@@ -1,6 +1,6 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Recipe } from "./Recipes.ts";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RecipeIngredient } from "./RecipeIngredient.ts";
 
 
 @ObjectType()
@@ -11,11 +11,14 @@ export class Ingredient{
     id!: number
 
     @Field(()=>String)
-    @Column({type: "text"})
+    @Column({type: "text", unique: true})
     name!: string
 
-    @ManyToOne(()=>Recipe, recipe=>recipe.ingredients, {onDelete: "CASCADE"})
-    @JoinColumn({name: "recipe_id"})
-    recipe!: Recipe
+    @Field(() => Date)
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP"})
+    created_at!: Date;
 
+    @Field(()=> [RecipeIngredient])
+    @OneToMany(() => RecipeIngredient, ri => ri.ingredient)
+    recipeIngredients!: RecipeIngredient[];
 }

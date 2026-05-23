@@ -1,0 +1,107 @@
+import { useQuery } from "@apollo/client/react";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  Stack,
+  Card,
+  CardContent,
+  CardMedia,
+  Chip,
+  CircularProgress,
+  Divider,
+} from "@mui/material";
+
+import { RecipeByTags } from "../graphql/query";
+
+const RecipesByTagPage = () => {
+  const navigate = useNavigate()
+  const location = useLocation();
+
+  const tagsArr = location.state;
+
+  const tags = tagsArr.map(tag => tag.name)
+
+  const { data, loading } = useQuery(RecipeByTags, {
+    variables: {
+      tags: tags?.map((t) => t.trim()),
+    },
+  });
+
+  const recipes = data?.recipeByTags || [];
+
+  return (
+    <Box p={3} sx={{mt: 10}}>
+
+      <Typography variant="h5" mb={1}>
+        Recipes By Tags
+      </Typography>
+
+      <Stack direction="row" spacing={1} my={5} flexWrap="wrap">
+        {tags.map((tag, index) => (
+          <Chip
+            key={index}
+            label={tag}
+            sx={{
+              bgcolor: "#2E7D32",
+              color: "white",
+              my: 5
+            }}
+          />
+        ))}
+      </Stack>
+
+      <Divider sx={{ mb: 3 }} />
+
+      {loading ? (
+        <CircularProgress />
+      ) : recipes.length === 0 ? (
+        <Typography>No recipes found for selected tags.</Typography>
+      ) : (
+        <Stack spacing={2}>
+          {recipes.map((recipe) => (
+            <Card key={recipe.id} sx={{ display: "flex" }} onClick={()=>navigate(`/recipe/${recipe.id}`)}>
+              {recipe.image && (
+                <CardMedia
+                  component="img"
+                  sx={{ width: 160 }}
+                  image={recipe.image}
+                  alt={recipe.title}
+                />
+              )}
+
+              <Box sx={{ display: "flex", flexDirection: "column"}}>
+                <CardContent>
+                  <Typography variant="h6">
+                    {recipe.title}
+                  </Typography>
+
+                  <Typography variant="body2" color="text.secondary">
+                    {recipe.description}
+                  </Typography>
+
+                  <Typography variant="caption" display="block"  sx={{fontSize: "15px"}}>
+                    Cooking Time: {recipe.cooking_time} min
+                  </Typography>
+
+                  <Stack direction="row" spacing={2} my={3} flexWrap="wrap">
+                    {recipe.tags?.map((t) => (
+                      <Chip
+                        key={t.id}
+                        label={t.name}
+                        size="xl"
+                        sx={{ bgcolor: "#f0f0f0" }}
+                      />
+                    ))}
+                  </Stack>
+                </CardContent>
+              </Box>
+            </Card>
+          ))}
+        </Stack>
+      )}
+    </Box>
+  );
+};
+
+export default RecipesByTagPage;

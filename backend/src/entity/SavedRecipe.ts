@@ -31,6 +31,7 @@ export class SavedRecipe{
     @JoinColumn({name: "recipe_id"})
     recipe!: Recipe 
 
-    @OneToMany(()=>Note, (note)=>note.saved_recipe)
-    notes!: Note[]
+    @Field(() => [Note])
+    @OneToMany(() => Note, (note) => note.saved_recipe)
+    notes!: Note[];
 }

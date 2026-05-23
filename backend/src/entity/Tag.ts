@@ -2,7 +2,6 @@ import { Field, ID, ObjectType } from "type-graphql";
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Recipe } from "./Recipes.ts";
 
-
 @ObjectType()
 @Entity("tags")
 export class Tag{

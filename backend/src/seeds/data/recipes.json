@@ -1,0 +1,422 @@
+[
+  {
+    "title": "Classic Spaghetti Bolognese",
+    "description": "Boil 400g of spaghetti in salted water. Sauté diced onions, carrots, and celery in a pan with 500g minced beef. Add a tin of chopped tomatoes, tomato paste, and a splash of red wine. Simmer for 30 minutes. Serve over the cooked spaghetti.",
+    "cooking_time": 45,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": false,
+    "userIndex": 1,
+    "tags": ["Italian", "Pasta"],
+    "ingredients": [
+      { "name": "Spaghetti", "quantity": 400, "unit": "g" },
+      { "name": "Minced Beef", "quantity": 500, "unit": "g" },
+      { "name": "Chopped Tomatoes", "quantity": 400, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Avocado Toast",
+    "description": "Toast a slice of artisan bread. Mash a ripe avocado in a bowl with a pinch of salt, pepper, and a squeeze of lemon juice. Spread the mashed avocado evenly over the toasted bread. Top with an optional fried egg.",
+    "cooking_time": 10,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 2,
+    "tags": ["Breakfast", "Healthy"],
+    "ingredients": [
+      { "name": "Avocado", "quantity": 1, "unit": "piece" },
+      { "name": "Sourdough Bread", "quantity": 1, "unit": "slice" },
+      { "name": "Lemon Juice", "quantity": 1, "unit": "tbsp" }
+    ]
+  },
+  {
+    "title": "Creamy Tomato Soup",
+    "description": "Sauté onions and garlic in a pot. Add 800g of canned crushed tomatoes, vegetable broth, and a dash of sugar. Bring to a boil, then reduce heat and simmer for 15 minutes. Blend the soup until smooth, stir in 50ml of heavy cream, and season with salt and pepper.",
+    "cooking_time": 30,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 3,
+    "tags": ["Soup", "Vegetarian"],
+    "ingredients": [
+      { "name": "Crushed Tomatoes", "quantity": 800, "unit": "g" },
+      { "name": "Vegetable Broth", "quantity": 500, "unit": "ml" },
+      { "name": "Heavy Cream", "quantity": 50, "unit": "ml" }
+    ]
+  },
+  {
+    "title": "Chicken Curry",
+    "description": "Fry diced onions, garlic, and ginger until fragrant. Add 3 tablespoons of curry powder, diced chicken breast, and coconut milk. Simmer gently for 20 minutes until the chicken is cooked through. Serve hot with steamed rice.",
+    "cooking_time": 40,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": false,
+    "userIndex": 1,
+    "tags": ["Indian", "Main Course"],
+    "ingredients": [
+      { "name": "Chicken Breast", "quantity": 500, "unit": "g" },
+      { "name": "Coconut Milk", "quantity": 400, "unit": "ml" },
+      { "name": "Curry Powder", "quantity": 3, "unit": "tbsp" }
+    ]
+  },
+  {
+    "title": "Vegetable Stir Fry",
+    "description": "Heat oil in a wok. Add sliced bell peppers, broccoli florets, and carrots. Stir-fry for 5 minutes. Toss in cooked noodles and 3 tablespoons of soy sauce. Stir continuously for another 2 minutes and serve immediately.",
+    "cooking_time": 20,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 4,
+    "tags": ["Asian", "Vegan"],
+    "ingredients": [
+      { "name": "Mixed Vegetables", "quantity": 300, "unit": "g" },
+      { "name": "Noodles", "quantity": 200, "unit": "g" },
+      { "name": "Soy Sauce", "quantity": 3, "unit": "tbsp" }
+    ]
+  },
+  {
+    "title": "Banana Pancakes",
+    "description": "Mash two ripe bananas in a mixing bowl. Whisk in 1 egg, 100ml of milk, and 100g of flour. Pour small ladles of batter into a hot, greased skillet. Cook until bubbles form, flip, and cook until golden brown on the other side.",
+    "cooking_time": 25,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 5,
+    "tags": ["Breakfast", "Sweet"],
+    "ingredients": [
+      { "name": "Bananas", "quantity": 2, "unit": "pieces" },
+      { "name": "Flour", "quantity": 100, "unit": "g" },
+      { "name": "Milk", "quantity": 100, "unit": "ml" }
+    ]
+  },
+  {
+    "title": "Greek Salad",
+    "description": "Chop cucumbers, tomatoes, red onion, and bell peppers. Add kalamata olives and a block of feta cheese. Drizzle with olive oil, sprinkle dried oregano, and season with salt and pepper. Toss gently to combine.",
+    "cooking_time": 15,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": false,
+    "userIndex": 2,
+    "tags": ["Salad", "Mediterranean"],
+    "ingredients": [
+      { "name": "Cucumber", "quantity": 1, "unit": "piece" },
+      { "name": "Tomatoes", "quantity": 3, "unit": "pieces" },
+      { "name": "Feta Cheese", "quantity": 100, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Mushroom Risotto",
+    "description": "Sauté mushrooms in butter. Add arborio rice and toast slightly. Slowly add warm vegetable broth one cup at a time, stirring constantly until absorbed. Continue this process for 20 minutes until the rice is creamy. Stir in parmesan cheese.",
+    "cooking_time": 35,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": false,
+    "userIndex": 1,
+    "tags": ["Italian", "Dinner"],
+    "ingredients": [
+      { "name": "Arborio Rice", "quantity": 250, "unit": "g" },
+      { "name": "Mushrooms", "quantity": 200, "unit": "g" },
+      { "name": "Vegetable Broth", "quantity": 750, "unit": "ml" }
+    ]
+  },
+  {
+    "title": "Beef Tacos",
+    "description": "Cook minced beef with taco seasoning in a pan. Warm up corn tortillas. Fill the tortillas with the seasoned beef, diced onions, chopped coriander, and a dollop of sour cream. Serve with lime wedges.",
+    "cooking_time": 20,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 3,
+    "tags": ["Mexican", "Dinner"],
+    "ingredients": [
+      { "name": "Minced Beef", "quantity": 400, "unit": "g" },
+      { "name": "Taco Shells", "quantity": 8, "unit": "pieces" },
+      { "name": "Taco Seasoning", "quantity": 1, "unit": "packet" }
+    ]
+  },
+  {
+    "title": "Chocolate Brownies",
+    "description": "Melt 200g of dark chocolate with 200g butter. Stir in 300g sugar, 4 eggs, and 100g flour. Pour the batter into a lined baking tin. Bake at 180°C for 25 minutes. Let it cool before cutting into squares.",
+    "cooking_time": 45,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 5,
+    "tags": ["Baking", "Dessert"],
+    "ingredients": [
+      { "name": "Dark Chocolate", "quantity": 200, "unit": "g" },
+      { "name": "Butter", "quantity": 200, "unit": "g" },
+      { "name": "Sugar", "quantity": 300, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Lemon Garlic Salmon",
+    "description": "Place salmon fillets on a baking sheet. Drizzle with olive oil, and top with minced garlic, salt, pepper, and lemon slices. Bake at 200°C for 15 minutes until the fish flakes easily with a fork.",
+    "cooking_time": 20,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 1,
+    "tags": ["Seafood", "Healthy"],
+    "ingredients": [
+      { "name": "Salmon Fillet", "quantity": 2, "unit": "pieces" },
+      { "name": "Olive Oil", "quantity": 2, "unit": "tbsp" },
+      { "name": "Lemon", "quantity": 1, "unit": "piece" }
+    ]
+  },
+  {
+    "title": "Garlic Butter Steak",
+    "description": "Season a ribeye steak generously with salt and pepper. Sear in a hot skillet for 4 minutes on each side. Add a large dollop of butter, crushed garlic, and rosemary to the pan. Baste the steak with the melted butter for the last minute before resting.",
+    "cooking_time": 20,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": false,
+    "userIndex": 2,
+    "tags": ["Beef", "Dinner"],
+    "ingredients": [
+      { "name": "Ribeye Steak", "quantity": 1, "unit": "piece" },
+      { "name": "Butter", "quantity": 3, "unit": "tbsp" },
+      { "name": "Garlic", "quantity": 2, "unit": "cloves" }
+    ]
+  },
+  {
+    "title": "Caprese Salad",
+    "description": "Slice ripe tomatoes and fresh mozzarella cheese. Arrange them alternately on a plate. Top with fresh basil leaves. Drizzle with extra virgin olive oil and balsamic glaze.",
+    "cooking_time": 10,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 4,
+    "tags": ["Salad", "Italian"],
+    "ingredients": [
+      { "name": "Tomatoes", "quantity": 3, "unit": "pieces" },
+      { "name": "Mozzarella", "quantity": 200, "unit": "g" },
+      { "name": "Basil", "quantity": 1, "unit": "bunch" }
+    ]
+  },
+  {
+    "title": "Classic Macaroni and Cheese",
+    "description": "Boil 400g macaroni. In a separate pan, melt butter, whisk in flour, and cook for 1 minute. Gradually add milk, stirring until thickened. Stir in cheddar cheese until melted. Combine the cheese sauce with the cooked macaroni and bake for 15 minutes.",
+    "cooking_time": 40,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 3,
+    "tags": ["Comfort Food", "Pasta"],
+    "ingredients": [
+      { "name": "Macaroni", "quantity": 400, "unit": "g" },
+      { "name": "Cheddar Cheese", "quantity": 200, "unit": "g" },
+      { "name": "Milk", "quantity": 500, "unit": "ml" }
+    ]
+  },
+  {
+    "title": "Classic Caesar Salad",
+    "description": "Chop romaine lettuce. Toss with croutons, parmesan cheese, and Caesar dressing. Top with grilled and sliced chicken breast.",
+    "cooking_time": 15,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 1,
+    "tags": ["Salad", "Chicken"],
+    "ingredients": [
+      { "name": "Romaine Lettuce", "quantity": 1, "unit": "head" },
+      { "name": "Caesar Dressing", "quantity": 4, "unit": "tbsp" },
+      { "name": "Chicken Breast", "quantity": 1, "unit": "piece" }
+    ]
+  },
+  {
+    "title": "Apple Pie",
+    "description": "Line a pie dish with rolled pastry. Toss sliced apples with sugar, cinnamon, and a little flour. Pour into the pastry crust. Cover with a top crust, seal the edges, and cut air vents. Bake at 190°C for 50 minutes.",
+    "cooking_time": 75,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 5,
+    "tags": ["Baking", "Dessert"],
+    "ingredients": [
+      { "name": "Apples", "quantity": 5, "unit": "pieces" },
+      { "name": "Pastry Dough", "quantity": 2, "unit": "sheets" },
+      { "name": "Cinnamon", "quantity": 1, "unit": "tbsp" }
+    ]
+  },
+  {
+    "title": "Vegetable Quiche",
+    "description": "Press a pastry crust into a tart pan. Whisk 4 eggs with 100ml of cream, salt, and pepper. Add sautéed spinach, mushrooms, and diced cheese to the crust. Pour the egg mixture over the top. Bake at 180°C for 35 minutes.",
+    "cooking_time": 55,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": false,
+    "userIndex": 4,
+    "tags": ["Vegetarian", "Baking"],
+    "ingredients": [
+      { "name": "Eggs", "quantity": 4, "unit": "pieces" },
+      { "name": "Pie Crust", "quantity": 1, "unit": "sheet" },
+      { "name": "Spinach", "quantity": 100, "unit": "g" }
+    ]
+  },
+  {
+    "title": "French Toast",
+    "description": "Whisk 2 eggs, 50ml milk, and a pinch of cinnamon in a flat dish. Dip slices of bread into the mixture until soaked. Fry in a buttered pan over medium heat until golden brown on both sides. Serve with maple syrup.",
+    "cooking_time": 15,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": false,
+    "userIndex": 2,
+    "tags": ["Breakfast", "Sweet"],
+    "ingredients": [
+      { "name": "Bread", "quantity": 4, "unit": "slices" },
+      { "name": "Eggs", "quantity": 2, "unit": "pieces" },
+      { "name": "Milk", "quantity": 50, "unit": "ml" }
+    ]
+  },
+  {
+    "title": "Fettuccine Alfredo",
+    "description": "Cook fettuccine according to package directions. Melt butter and cream cheese in a saucepan. Whisk in heavy cream, garlic powder, and parmesan cheese. Toss the cooked pasta in the rich sauce and serve hot.",
+    "cooking_time": 25,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 1,
+    "tags": ["Italian", "Pasta"],
+    "ingredients": [
+      { "name": "Fettuccine", "quantity": 400, "unit": "g" },
+      { "name": "Heavy Cream", "quantity": 200, "unit": "ml" },
+      { "name": "Parmesan", "quantity": 100, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Spicy Tomato Shakshuka",
+    "description": "Sauté onions, peppers, and garlic in a skillet. Add chopped tomatoes, cumin, and paprika, and simmer until thick. Make small wells in the sauce and crack eggs directly into them. Cover and cook on low for 8 minutes until whites are set.",
+    "cooking_time": 30,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 3,
+    "tags": ["Breakfast", "Middle Eastern"],
+    "ingredients": [
+      { "name": "Eggs", "quantity": 4, "unit": "pieces" },
+      { "name": "Chopped Tomatoes", "quantity": 400, "unit": "g" },
+      { "name": "Bell Pepper", "quantity": 1, "unit": "piece" }
+    ]
+  },
+  {
+    "title": "Roasted Butternut Squash Soup",
+    "description": "Roast diced butternut squash and onions at 200°C for 30 minutes. Transfer to a pot with vegetable broth. Simmer for 10 minutes. Blend until completely smooth. Stir in a splash of coconut cream before serving.",
+    "cooking_time": 50,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 4,
+    "tags": ["Soup", "Vegan"],
+    "ingredients": [
+      { "name": "Butternut Squash", "quantity": 1, "unit": "piece" },
+      { "name": "Vegetable Broth", "quantity": 750, "unit": "ml" },
+      { "name": "Onion", "quantity": 1, "unit": "piece" }
+    ]
+  },
+  {
+    "title": "BBQ Pulled Pork",
+    "description": "Place a pork shoulder in a slow cooker. Pour barbecue sauce, apple cider vinegar, and brown sugar over the meat. Cook on low for 8 hours. Remove the pork, shred it with two forks, and mix back into the cooking juices.",
+    "cooking_time": 480,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 2,
+    "tags": ["American", "Dinner"],
+    "ingredients": [
+      { "name": "Pork Shoulder", "quantity": 1.5, "unit": "kg" },
+      { "name": "BBQ Sauce", "quantity": 300, "unit": "ml" },
+      { "name": "Apple Cider Vinegar", "quantity": 50, "unit": "ml" }
+    ]
+  },
+  {
+    "title": "Garlic Bread",
+    "description": "Mix softened butter with minced garlic and chopped parsley. Slice a baguette and spread the garlic butter mixture evenly on the cut sides. Bake at 200°C for 10 minutes until the edges are golden and crispy.",
+    "cooking_time": 15,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 5,
+    "tags": ["Side Dish", "Italian"],
+    "ingredients": [
+      { "name": "Baguette", "quantity": 1, "unit": "piece" },
+      { "name": "Butter", "quantity": 100, "unit": "g" },
+      { "name": "Garlic", "quantity": 3, "unit": "cloves" }
+    ]
+  },
+  {
+    "title": "Lemon Drizzle Cake",
+    "description": "Cream 200g butter with 200g sugar. Beat in 4 eggs, 200g self-raising flour, and lemon zest. Bake at 180°C for 45 minutes. While warm, poke holes in the cake and pour over a mixture of lemon juice and granulated sugar.",
+    "cooking_time": 70,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 5,
+    "tags": ["Baking", "Sweet"],
+    "ingredients": [
+      { "name": "Self-raising Flour", "quantity": 200, "unit": "g" },
+      { "name": "Butter", "quantity": 200, "unit": "g" },
+      { "name": "Lemons", "quantity": 2, "unit": "pieces" }
+    ]
+  },
+  {
+    "title": "Chicken Noodle Soup",
+    "description": "Boil chopped carrots, celery, and chicken pieces in chicken broth for 20 minutes. Remove the chicken, shred the meat, and return it to the pot with a handful of noodles. Simmer until the noodles are soft. Season with salt and pepper.",
+    "cooking_time": 40,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 1,
+    "tags": ["Soup", "Chicken"],
+    "ingredients": [
+      { "name": "Chicken Breast", "quantity": 300, "unit": "g" },
+      { "name": "Chicken Broth", "quantity": 1, "unit": "liter" },
+      { "name": "Noodles", "quantity": 150, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Homemade Pizza",
+    "description": "Roll out pizza dough. Spread a thin layer of tomato sauce over the dough. Top with shredded mozzarella cheese, sliced pepperoni, and fresh basil. Bake at 220°C for 12-15 minutes until the crust is nicely browned.",
+    "cooking_time": 30,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 1,
+    "tags": ["Italian", "Dinner"],
+    "ingredients": [
+      { "name": "Pizza Dough", "quantity": 1, "unit": "ball" },
+      { "name": "Tomato Sauce", "quantity": 100, "unit": "ml" },
+      { "name": "Mozzarella Cheese", "quantity": 150, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Beef Stroganoff",
+    "description": "Sear strips of beef and sliced mushrooms in a pan. Remove from the pan. In the same pan, sauté onions and stir in beef broth and sour cream to create a creamy sauce. Add the beef and mushrooms back in and warm gently.",
+    "cooking_time": 30,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 2,
+    "tags": ["Russian", "Dinner"],
+    "ingredients": [
+      { "name": "Beef Strips", "quantity": 500, "unit": "g" },
+      { "name": "Mushrooms", "quantity": 200, "unit": "g" },
+      { "name": "Sour Cream", "quantity": 150, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Chocolate Chip Cookies",
+    "description": "Cream 150g butter with 150g sugar. Beat in 1 egg and 1 teaspoon of vanilla. Gradually fold in 200g flour, a pinch of salt, and 100g chocolate chips. Scoop small balls of dough onto a baking sheet. Bake at 180°C for 12 minutes.",
+    "cooking_time": 25,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 5,
+    "tags": ["Baking", "Sweet"],
+    "ingredients": [
+      { "name": "Flour", "quantity": 200, "unit": "g" },
+      { "name": "Butter", "quantity": 150, "unit": "g" },
+      { "name": "Chocolate Chips", "quantity": 100, "unit": "g" }
+    ]
+  },
+  {
+    "title": "Teriyaki Chicken",
+    "description": "Cut chicken thighs into bite-sized pieces and cook in a pan until browned. In a separate bowl, mix soy sauce, honey, and minced garlic. Pour the sauce over the chicken and let it simmer until sticky and thickened.",
+    "cooking_time": 25,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 4,
+    "tags": ["Asian", "Chicken"],
+    "ingredients": [
+      { "name": "Chicken Thighs", "quantity": 500, "unit": "g" },
+      { "name": "Soy Sauce", "quantity": 50, "unit": "ml" },
+      { "name": "Honey", "quantity": 2, "unit": "tbsp" }
+    ]
+  },
+  {
+    "title": "Garlic Roasted Brussels Sprouts",
+    "description": "Toss halved Brussels sprouts with olive oil, minced garlic, salt, and pepper. Spread on a baking sheet in a single layer. Roast at 200°C for 20 minutes until the edges are crispy and darkened.",
+    "cooking_time": 25,
+    "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
+    "is_public": true,
+    "userIndex": 2,
+    "tags": ["Vegetable Dish", "Side Dish"],
+    "ingredients": [
+      { "name": "Brussels Sprouts", "quantity": 400, "unit": "g" },
+      { "name": "Olive Oil", "quantity": 2, "unit": "tbsp" },
+      { "name": "Garlic", "quantity": 3, "unit": "cloves" }
+    ]
+  }
+]

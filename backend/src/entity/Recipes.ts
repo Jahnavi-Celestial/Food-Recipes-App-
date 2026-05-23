@@ -2,9 +2,9 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGe
 import { ManyToOne } from "typeorm";
 import { User } from "./User.ts";
 import {ObjectType, Field, ID,Int} from "type-graphql";
-import { Ingredient } from "./Ingredient.ts";
 import { Tag } from "./Tag.ts";
 import { SavedRecipe } from "./SavedRecipe.ts";
+import { RecipeIngredient } from "./RecipeIngredient.ts";
 
 @ObjectType()
 @Entity("recipes")
@@ -48,9 +48,9 @@ export class Recipe{
     @JoinColumn({name: "user_id"})
     user!: User;
 
-    @Field(() => [Ingredient], {nullable: true})
-    @OneToMany(()=>Ingredient, ing => ing.recipe, {cascade: true, eager: true})
-    ingredients!: Ingredient[]
+    @Field(()=>[RecipeIngredient])
+    @OneToMany(() => RecipeIngredient, ri => ri.recipe,{cascade: true, eager: true})
+    ingredients!: RecipeIngredient[]
 
     @Field(() => [Tag])
     @ManyToMany(()=>Tag, {cascade: true, eager: true})
@@ -66,6 +66,7 @@ export class Recipe{
     })
     tags!: Tag[]
 
+    @Field(()=>[SavedRecipe], {nullable: true})
     @OneToMany(()=>SavedRecipe, sr=>sr.recipe)
     savedBy!: SavedRecipe[]
 }

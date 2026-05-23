@@ -1,0 +1,27 @@
+[
+  {
+    "name": "raj",
+    "email": "raj@gmail.com",
+    "password": "1234"
+  },
+  {
+    "name": "pallavi",
+    "email": "pallavi@gmail.com",
+    "password": "1234"
+  },
+  {
+    "name": "rohan",
+    "email": "rohan@gmail.com",
+    "password": "1234"
+  },
+  {
+    "name": "priya",
+    "email": "priya@gmail.com",
+    "password": "1234"
+  },
+  {
+    "name": "khushi",
+    "email": "khushi@gmail.com",
+    "password": "1234"
+  }
+]
