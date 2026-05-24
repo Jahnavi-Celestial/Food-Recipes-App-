@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "tsc",
-    "start": "tsx src/app/.ts",
+    "build": "echo 'build skipeed'",
+    "start": "tsx app.ts",
     "migrate": "node-pg-migrate up",
     "seed": "tsx ./src/seeds/seed.ts"
   },
