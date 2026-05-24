@@ -60,6 +60,7 @@ const SavedRecipeCard = ({ recipe, savedRecipeId, refetch }) => {
       <Card
         sx={{
           width: { xs: "250px", md: "300px" },
+          height: "500px",
           borderRadius: 4,
           overflow: "hidden",
           boxShadow: 3,
