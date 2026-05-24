@@ -10,9 +10,13 @@ import 'swiper/css/pagination';
 import '../styles.css';
 
 const PopularRecipesSection = () => {
-  const { data } = useQuery(PopularRecipes);
+  const { loading, data } = useQuery(PopularRecipes);
 
   const recipes = data?.popularRecipes
+
+  if(loading){
+    return <Typography variant="h5" sx={{ color: "gray", fontWeight: "bold", textAlign: "center"}}>Loading...</Typography>
+  }
 
   return (
     <Container maxWidth="lg" sx={{ py: 10 }}>

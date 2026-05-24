@@ -18,13 +18,11 @@ const RecipesByTagPage = () => {
   const navigate = useNavigate()
   const location = useLocation();
 
-  const tagsArr = location.state;
-
-  const tags = tagsArr.map(tag => tag.name)
+  const tags = location.state;
 
   const { data, loading } = useQuery(RecipeByTags, {
     variables: {
-      tags: tags?.map((t) => t.trim()),
+      tags: tags?.map((t) => t?.trim()),
     },
   });
 

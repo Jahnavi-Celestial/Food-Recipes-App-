@@ -16,19 +16,17 @@ import RecipeCard from "../components/RecipeCard";
 import { useEffect, useState } from "react";
 
 const MyRecipesPage = () => {
-  const { data, refetch: refetchMyRecipes } = useQuery(MyRecipes);
+  const { loading, data, refetch: refetchMyRecipes } = useQuery(MyRecipes);
 
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("");
   const [maxCookTime, setMaxCookTime] = useState("");
   const [ingredientCount, setIngredientCount] = useState("");
+  const [searchByTags, setSearchByTags] = useState("");
   const [page, setPage] = useState(1);
 
-  const isXs = useMediaQuery("(max-width:600px)");
-  const isSm = useMediaQuery("(max-width:900px)");
-  const isMd = useMediaQuery("(max-width:1200px)");
-
-  const itemsPerPage = isXs ? 4 : isSm ? 6 : isMd ? 8 : 10;
+  const defaultValue = 12;
+  const [itemsPerPage, setItemsPerPage] = useState(defaultValue) 
 
   const filteredRecipes = data?.myRecipes?.filter((recipe) => {
     const matchesSearch = recipe.title
@@ -39,11 +37,19 @@ const MyRecipesPage = () => {
       ? recipe?.cooking_time <= Number(maxCookTime)
       : true;
 
+    const matchesTagSearch =
+      searchByTags === "" ||
+      recipe.tags.some((tag) =>
+        tag.name.toLowerCase().includes(searchByTags.toLowerCase()),
+      );
+
     const matchesIngredients = ingredientCount
       ? recipe?.ingredients.length <= Number(ingredientCount)
       : true;
 
-    return matchesSearch && matchesCookTime && matchesIngredients;
+    return (
+      matchesSearch && matchesCookTime && matchesIngredients && matchesTagSearch
+    );
   });
 
   filteredRecipes?.sort((a, b) => {
@@ -83,11 +89,27 @@ const MyRecipesPage = () => {
     setPage(1);
   };
 
+  const handleSearchTag = (e) => {
+    setSearchByTags(e.target.value);
+    setPage(1);
+  };
+
   const handlePageChange = (e, value) => {
     setPage(value);
   };
 
+  const handleItemsPerPage = (e) => {
+    setItemsPerPage(Number(e.target.value))
+    setPage(1)
+  }
+
   useEffect(() => {}, [data]);
+
+  if(loading){
+    return <Box sx={{width: "100vw", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}>
+      <Typography variant="h5" sx={{ color: "gray", fontWeight: "bold" }}>Loading...</Typography>
+    </Box>
+  }
 
   return (
     <Box
@@ -112,6 +134,17 @@ const MyRecipesPage = () => {
         My Recipes
       </Typography>
 
+      <FormControl sx={{width: "100px", pl: { xs: "30px", md: "50px" }, mx: 3, my: 3}} >
+        <InputLabel sx={{pl: { xs: "30px", md: "50px"}, mx: 2}}>Items/Page</InputLabel>
+        <Select value={itemsPerPage} label="Items/Page" onChange={handleItemsPerPage}>
+          <MenuItem value={4}>4</MenuItem>
+          <MenuItem value={8}>8</MenuItem>
+          <MenuItem value={12}>12</MenuItem>
+          <MenuItem value={16}>16</MenuItem>
+          <MenuItem value={20}>20</MenuItem>
+        </Select>
+      </FormControl>
+
       <Box
         sx={{
           display: "flex",
@@ -127,13 +160,24 @@ const MyRecipesPage = () => {
           variant="outlined"
           value={search}
           onChange={handleSearch}
-          sx={{ minWidth: 200, width: "20%" }}
+          sx={{ minWidth: 200, width: "18%" }}
           slotProps={{
             htmlInput: { min: 0 },
           }}
         />
 
-        <FormControl sx={{ minWidth: 200 }} sx={{ minWidth: 200, width: "20%" }}>
+        <TextField
+          label="Search Recipes By Tag"
+          variant="outlined"
+          value={searchByTags}
+          onChange={handleSearchTag}
+          sx={{ minWidth: 200, width: "18%" }}
+        />
+
+        <FormControl
+          sx={{ minWidth: 200 }}
+          sx={{ minWidth: 200, width: "18%" }}
+        >
           <InputLabel>Sort By</InputLabel>
 
           <Select
@@ -166,7 +210,7 @@ const MyRecipesPage = () => {
           type="number"
           value={maxCookTime}
           onChange={(e) => setMaxCookTime(e.target.value)}
-          sx={{ minWidth: 200, width: "20%" }}
+          sx={{ minWidth: 200, width: "18%" }}
           slotProps={{
             htmlInput: { min: 0 },
           }}
@@ -177,7 +221,7 @@ const MyRecipesPage = () => {
           type="number"
           value={ingredientCount}
           onChange={(e) => setIngredientCount(e.target.value)}
-          sx={{ minWidth: 200, width: "20%" }}
+          sx={{ minWidth: 200, width: "18%" }}
           slotProps={{
             htmlInput: { min: 0 },
           }}
