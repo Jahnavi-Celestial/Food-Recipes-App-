@@ -7,8 +7,8 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "target": "es2020",
     "types": [],
     // For nodejs:
@@ -44,9 +44,7 @@
     "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true
   },
   "exclude": ["node_modules"],
-	"include": ["./src/**/*.tsx", "./src/**/*.ts"]
+	"include": ["./src/**/*"]
 }
