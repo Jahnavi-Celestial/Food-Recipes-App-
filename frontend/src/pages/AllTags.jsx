@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, TextField, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Tags } from "../GraphQL/query";
+import { Tags } from "../GraphQl/query";
 
 const TagPage = () => {
   const { data, loading } = useQuery(Tags);

@@ -12,7 +12,7 @@ import {
   Divider,
 } from "@mui/material";
 
-import { RecipeByTags } from "../GraphQL/query";
+import { RecipeByTags } from "../GraphQl/query";
 
 const RecipesByTagPage = () => {
   const navigate = useNavigate()

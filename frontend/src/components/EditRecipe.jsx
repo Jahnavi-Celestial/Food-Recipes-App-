@@ -19,8 +19,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { Autocomplete } from "@mui/material";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { useEffect, useState } from "react";
-import { UpdateRecipe } from "../GraphQL/mutation";
-import { Tags } from "../GraphQL/query";
+import { UpdateRecipe } from "../GraphQl/mutation";
+import { Tags } from "../GraphQl/query";
 
 const EditRecipeModal = ({ open, onClose, recipe }) => {
   const [title, setTitle] = useState("");

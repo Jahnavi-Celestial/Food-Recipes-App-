@@ -19,8 +19,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { useState } from "react";
-import { CreateRecipe } from "../GraphQL/mutation";
-import { Tags } from "../graphql/query";
+import { CreateRecipe } from "../GraphQl/mutation";
+import { Tags } from "../GraphQl/query";
 
 const CreateRecipeModal = ({ open, onClose }) => {
   const [title, setTitle] = useState("");

@@ -13,7 +13,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { useState } from "react";
 import { useMutation } from "@apollo/client/react";
-import { UnSaveRecipe } from "../GraphQL/mutation";
+import { UnSaveRecipe } from "../GraphQl/mutation";
 import NoteModal from "./NoteModal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import { useNavigate } from "react-router-dom";

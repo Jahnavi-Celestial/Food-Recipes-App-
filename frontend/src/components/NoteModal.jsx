@@ -20,9 +20,9 @@ import {
   AddNote,
   UpdateNote,
   DeleteNote,
-} from "../GraphQL/mutation";
+} from "../GraphQl/mutation";
 
-import { NotesBySavedRecipe } from "../GraphQL/query";
+import { NotesBySavedRecipe } from "../GraphQl/query";
 
 const NoteModal = ({
   open,

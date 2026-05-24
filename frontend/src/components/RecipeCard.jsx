@@ -12,7 +12,7 @@ import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
 import EditRecipeModal from "./EditRecipe";
 import { useMutation } from "@apollo/client/react";
-import { DeleteRecipe } from "../GraphQL/mutation";
+import { DeleteRecipe } from "../GraphQl/mutation";
 
 const RecipeCard = ({ recipe, canEdit }) => {
   const [EditOpen, setEditOpen] = useState(false);
