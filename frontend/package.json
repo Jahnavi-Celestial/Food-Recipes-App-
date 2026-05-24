@@ -23,6 +23,7 @@
     "react-dom": "^19.2.6",
     "react-material-ui-carousel": "^3.4.2",
     "react-router-dom": "^7.15.1",
+    "rxjs": "^7.8.2",
     "swiper": "^12.1.4"
   },
   "devDependencies": {
