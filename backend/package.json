@@ -4,10 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "node -r dotenv/config -r ts-node/register node_modules/.bin/node-pg-migrate -j ts",
-    "dev": "npx nodemon --watch './**/*.ts' --exec 'npx tsx app.ts'",
-    "seed": "npx tsx ./seed/seed.ts"
+    "build": "tsc",
+    "start": "node dist/app/.js",
+    "migrate": "node-pg-migrate up",
+    "seed": "tsx ./src/seeds/seed.ts"
   },
   "keywords": [],
   "author": "",
