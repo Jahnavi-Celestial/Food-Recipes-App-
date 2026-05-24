@@ -188,7 +188,7 @@ const SavedRecipes = () => {
             <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={3}>
               <SavedRecipeCard
                 recipe={recipe}
-                savedRecipeId={recipe?.savedBy[0].id}
+                savedRecipeId={recipe?.savedBy?.[0].id}
                 refetch={refetch}
               />
             </Grid>
