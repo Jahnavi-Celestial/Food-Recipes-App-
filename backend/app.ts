@@ -14,6 +14,8 @@ const app = express();
 
 app.use(cors({
   origin: process.env.FRONTEND_URL,
+  methods: 'GET,POST,PUT,DELETE,OPTIONS',
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }))
 
@@ -32,7 +34,7 @@ app.use(
     }))
 );
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
