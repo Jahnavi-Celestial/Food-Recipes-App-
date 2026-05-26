@@ -14,16 +14,20 @@ import EditRecipeModal from "./EditRecipe";
 import { useMutation } from "@apollo/client/react";
 import { DeleteRecipe } from "../GraphQl/mutation";
 
-const RecipeCard = ({ recipe, canEdit }) => {
+const RecipeCard = ({ recipe, canEdit, refetch }) => {
   const [EditOpen, setEditOpen] = useState(false);
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
-  const [deleteRecipe] = useMutation(DeleteRecipe);
+  const [deleteRecipe] = useMutation(DeleteRecipe,{
+    onCompleted:() => {
+      refetch()
+    }
+  });
 
   const handleViewBtn = () => {
     if (isAuthenticated || recipe.is_public == true) {
-      navigate(`/recipe/${recipe.id}`);
+      navigate(`/recipe/${recipe.id}`, { state: { triggerRefetch: true }});
     }
   };
 
@@ -36,7 +40,7 @@ const RecipeCard = ({ recipe, canEdit }) => {
   return (
     <Card
       sx={{
-        width: { xs: "250px", md: "300px" },
+        width: "300px",
         height: "400px",
         borderRadius: "20px",
         boxShadow: "0px 5px 20px rgba(0,0,0,0.06)",
@@ -121,11 +125,15 @@ const RecipeCard = ({ recipe, canEdit }) => {
         </Button>
       </CardContent>
 
-      <EditRecipeModal
-        open={EditOpen}
-        onClose={() => setEditOpen(false)}
-        recipe={recipe}
-      />
+      {
+        canEdit && (
+          <EditRecipeModal
+            open={EditOpen}
+            onClose={() => setEditOpen(false)}
+            recipe={recipe}
+          />
+        )
+      }
     </Card>
   );
 };

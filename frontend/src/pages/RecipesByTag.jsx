@@ -58,7 +58,7 @@ const RecipesByTagPage = () => {
       ) : (
         <Stack spacing={2}>
           {recipes.map((recipe) => (
-            <Card key={recipe.id} sx={{ display: "flex" }} onClick={()=>navigate(`/recipe/${recipe.id}`)}>
+            <Card key={recipe.id} sx={{ display: "flex" }} onClick={()=>navigate(`/recipe/${recipe.id}`, { state: { triggerRefetch: true }})}>
               {recipe.image && (
                 <CardMedia
                   component="img"

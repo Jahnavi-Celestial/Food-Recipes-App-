@@ -1,247 +1,239 @@
 import { useQuery } from "@apollo/client/react";
-import { Recipes } from "../GraphQl/query";
+import { FilterRecipes, SearchTags } from "../GraphQl/query";
 import {
   Box,
-  Grid,
   Typography,
   TextField,
   Pagination,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
+  Autocomplete,
+  Chip,
 } from "@mui/material";
+import { useState, useEffect } from "react";
+import { useDebounce } from "../Hook/useDebounce";
 import RecipeCard from "../components/RecipeCard";
-import { useState } from "react";
 
 const AllRecipes = () => {
-  const { loading, data } = useQuery(Recipes);
-
   const [search, setSearch] = useState("");
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
+
   const [sortBy, setSortBy] = useState("");
   const [maxCookTime, setMaxCookTime] = useState("");
-  const [ingredientCount, setIngredientCount] = useState("");
-  const [searchByTags, setSearchByTags] = useState("");
+  const [maxIngredients, setMaxIngredients] = useState("");
+
   const [page, setPage] = useState(1);
-  
-  const defaultValue = 12;
-  const [itemsPerPage, setItemsPerPage] = useState(defaultValue) 
+  const [itemsPerPage, setItemsPerPage] = useState(12);
 
-  const filteredRecipes = data?.recipes?.filter((recipe) => {
-    const matchesSearch = recipe.title.toLowerCase().includes(search.toLowerCase());
+  const debouncedSearch = useDebounce(search, 500);
+  const debouncedTags = useDebounce(tags, 500);
+  const debouncedCookTime = useDebounce(maxCookTime, 500);
+  const debouncedIngredients = useDebounce(maxIngredients, 500);
+  const debouncedTagInput = useDebounce(tagInput, 400);
 
-    const matchesTagSearch = searchByTags === "" || recipe.tags.some((tag) => tag.name.toLowerCase().includes(searchByTags.toLowerCase()));
-
-    const matchesCookTime = maxCookTime ? recipe?.cooking_time <= Number(maxCookTime) : true;
-
-    const matchesIngredients = ingredientCount ? recipe?.ingredients.length <= Number(ingredientCount) : true;
-
-    return matchesSearch && matchesCookTime && matchesIngredients && matchesTagSearch;
-  });
-
-  filteredRecipes?.sort((a, b) => {
-    switch (sortBy) {
-      case "ingredientsAsc":
-        return a.ingredients.length - b.ingredients.length;
-
-      case "ingredientsDesc":
-        return b.ingredients.length - a.ingredients.length;
-
-      case "cookTimeAsc":
-        return a.cooking_time - b.cooking_time;
-
-      case "cookTimeDesc":
-        return b.cooking_time - a.cooking_time;
-
-      case "latest":
-        return new Date(b.created_at) - new Date(a.created_at);
-
-      case "oldest":
-        return new Date(a.created_at) - new Date(b.created_at);
-
-      default:
-        return 0;
-    }
-  });
-
-  const totalPages = Math.ceil(filteredRecipes?.length / itemsPerPage);
-
-  const paginatedRecipes = filteredRecipes?.slice(
-    (page - 1) * itemsPerPage,
-    page * itemsPerPage,
-  );
-
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
+  useEffect(() => {
     setPage(1);
-  };
+  }, [
+    debouncedSearch,
+    debouncedTags,
+    sortBy,
+    debouncedCookTime,
+    debouncedIngredients,
+  ]);
 
-  const handleSearchTag = (e) => {
-    setSearchByTags(e.target.value)
-    setPage(1)
-  }
+  const { loading, data, refetch } = useQuery(FilterRecipes, {
+    variables: {
+      mode: "public",
+      search: debouncedSearch || null,
+      tags: debouncedTags.length ? debouncedTags : null,
+      sortBy: sortBy || null,
+      order: "desc",
+      maxCookTime: debouncedCookTime ? Number(debouncedCookTime) : null,
+      maxIngredients: debouncedIngredients
+        ? Number(debouncedIngredients)
+        : null,
+      limit: itemsPerPage,
+      skip: (page - 1) * itemsPerPage,
+    },
+  });
 
-  const handlePageChange = (e, value) => {
-    setPage(value);
-  };
+  const recipes = data?.filterRecipes || [];
 
-  const handleItemsPerPage = (e) => {
-    setItemsPerPage(Number(e.target.value))
-    setPage(1)
-  }
+  const { data: tagData } = useQuery(SearchTags, {
+    variables: {
+      search: debouncedTagInput,
+    },
+    skip: debouncedTagInput.length < 1,
+  });
 
-  if(loading){
-    return <Box sx={{width: "100vw", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center"}}>
-      <Typography variant="h5" sx={{ color: "gray", fontWeight: "bold" }}>Loading...</Typography>
-    </Box>
+  useEffect(()=>{
+    refetch()
+  },[data])
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h5" sx={{ color: "gray", fontWeight: "bold" }}>
+          Loading...
+        </Typography>
+      </Box>
+    );
   }
 
   return (
     <Box
       sx={{
-        bgcolor: "#FFFFFF",
-        py: 15,
-        width: "100vw",
-        minHeight: "100vh",
+        p: 3,
+        mt: 8,
         background: "linear-gradient(to bottom right, #E8F5E9, #FFFFFF)",
       }}
     >
-      <Typography
-        variant="h5"
-        sx={{
-          fontWeight: "bold",
-          my: 3,
-          mx: 3,
-          pl: { xs: "30px", md: "50px" },
-          fontSize: "40px",
-        }}
-      >
+      <Typography variant="h4" mb={3} sx={{ pb: "20px", ml: 10}}>
         Recipes
       </Typography>
 
-      <FormControl sx={{width: "100px", pl: { xs: "30px", md: "50px" }, mx: 3, my: 3}} >
-        <InputLabel sx={{pl: { xs: "30px", md: "50px"}, mx: 2}}>Items/Page</InputLabel>
-        <Select value={itemsPerPage} label="Items/Page" onChange={handleItemsPerPage}>
-          <MenuItem value={4}>4</MenuItem>
-          <MenuItem value={8}>8</MenuItem>
-          <MenuItem value={12}>12</MenuItem>
-          <MenuItem value={16}>16</MenuItem>
-          <MenuItem value={20}>20</MenuItem>
-        </Select>
-      </FormControl>
-
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          flexWrap: "wrap",
-          mx: 3,
-          pl: { xs: "30px", md: "50px" },
-          mb: 4,
-        }}
-      >
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3, pb: "30px", justifyContent: "center"}}>
         <TextField
-          label="Search Recipes"
-          variant="outlined"
+          label="Search"
           value={search}
-          onChange={handleSearch}
-          sx={{ minWidth: 200, width: "18%" }}
+          onChange={(e) => setSearch(e.target.value)}
+          sx={{ width: "300px" }}
         />
 
-        <TextField
-          label="Search Recipes By Tag"
-          variant="outlined"
-          value={searchByTags}
-          onChange={handleSearchTag}
-          sx={{ minWidth: 200, width: "18%" }}
+        <Autocomplete
+          multiple
+          freeSolo
+          options={tagData?.searchTags || []}
+          value={tags}
+          inputValue={tagInput}
+          onInputChange={(e, value) => setTagInput(value)}
+          onChange={(e, value) => setTags(value)}
+          renderTags={(value, getTagProps) =>
+            value.map((option, index) => (
+              <Chip label={option} {...getTagProps({ index })} />
+            ))
+          }
+          renderInput={(params) => (
+            <TextField {...params} label="Tags" placeholder="Type tags..." />
+          )}
+          sx={{ width: "300px" }}
         />
 
-        <FormControl sx={{ minWidth: 200, width: "18%" }}>
-          <InputLabel>Sort By</InputLabel>
-
+        <FormControl>
           <Select
             value={sortBy}
-            label="Sort By"
             onChange={(e) => setSortBy(e.target.value)}
+            displayEmpty
+            sx={{ width: "250px" }}
           >
             <MenuItem value="">None</MenuItem>
-
-            <MenuItem value="ingredientsAsc">
-              Ingredients (Low to High)
-            </MenuItem>
-
-            <MenuItem value="ingredientsDesc">
-              Ingredients (High to Low)
-            </MenuItem>
-
-            <MenuItem value="cookTimeAsc">Cook Time (Fastest)</MenuItem>
-
-            <MenuItem value="cookTimeDesc">Cook Time (Slowest)</MenuItem>
-
-            <MenuItem value="latest">Latest Recipes</MenuItem>
-
-            <MenuItem value="oldest">Oldest Recipes</MenuItem>
+            <MenuItem value="ingredientsAsc">Ingredients (Asc)</MenuItem>
+            <MenuItem value="ingredientsDesc">Ingredients (Desc)</MenuItem>
+            <MenuItem value="cookTimeAsc">Cook Time (Asc)</MenuItem>
+            <MenuItem value="cookTimeDesc">Cook Time (Desc)</MenuItem>
+            <MenuItem value="latest">Latest</MenuItem>
+            <MenuItem value="oldest">Oldest</MenuItem>
           </Select>
         </FormControl>
 
         <TextField
-          label="Max Cook Time (mins)"
+          label="Max Cook Time"
           type="number"
           value={maxCookTime}
           onChange={(e) => setMaxCookTime(e.target.value)}
-          sx={{ minWidth: 200, width: "18%" }}
-          slotProps={{
-            htmlInput: { min: 0 },
-          }}
+          sx={{ width: "300px" }}
         />
 
         <TextField
           label="Max Ingredients"
           type="number"
-          value={ingredientCount}
-          onChange={(e) => setIngredientCount(e.target.value)}
-          sx={{ minWidth: 200, width: "18%" }}
           slotProps={{
-            htmlInput: { min: 0 },
-          }}
+                      htmlInput: { min: 0 },
+                    }}
+          value={maxIngredients}
+          onChange={(e) => setMaxIngredients(e.target.value)}
+          sx={{ width: "300px" }}
         />
       </Box>
 
-      <Grid container spacing={4} sx={{ ml: { xs: "40px", md: "60px" } }}>
-        {paginatedRecipes?.length > 0 ? (
-          paginatedRecipes?.map((recipe) => (
-            <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={3}>
-              {" "}
-              <RecipeCard recipe={recipe} canEdit={false} />
-            </Grid>
-          ))
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: 3,
+          mt: 3,
+        }}
+      >
+        {recipes.map((recipe) => (
+          <RecipeCard key={recipe.id} recipe={recipe} canEdit={false} />
+        ))}
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          mt: 5,
+        }}
+      >
+        <Box sx={{ flex: 1 }} />
+
+        {recipes.length != 0 ? (
+          <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
+            <Pagination
+              count={recipes.length < itemsPerPage ? page : page + 1}
+              page={page}
+              onChange={(e, v) => setPage(v)}
+            />
+          </Box>
         ) : (
+          ""
+        )}
+
+        {recipes.length != 0 ? (
           <Box
             sx={{
-              width: "100%",
-              height: "50vh",
+              flex: 1,
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "flex-end",
               alignItems: "center",
+              gap: 1,
             }}
           >
-            <Typography variant="h5" sx={{ color: "gray", fontWeight: "bold" }}>
-              No Recipes Found
-            </Typography>
-          </Box>
-        )}
-      </Grid>
+            <Typography variant="body2">Items/Page</Typography>
 
-      {filteredRecipes?.length > 0 && (
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-          <Pagination
-            count={totalPages}
-            page={page}
-            onChange={handlePageChange}
-            color="primary"
-          />
-        </Box>
-      )}
+            <FormControl size="small">
+              <Select
+                value={itemsPerPage}
+                onChange={(e) => {
+                  setItemsPerPage(Number(e.target.value));
+                  setPage(1);
+                }}
+              >
+                <MenuItem value={4}>4</MenuItem>
+                <MenuItem value={8}>8</MenuItem>
+                <MenuItem value={12}>12</MenuItem>
+                <MenuItem value={16}>16</MenuItem>
+                <MenuItem value={20}>20</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        ) : (
+          ""
+        )}
+      </Box>
     </Box>
   );
 };

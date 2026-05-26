@@ -54,7 +54,7 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
         recipe.ingredients?.length
           ? recipe.ingredients.map(ing=>{
             return {
-              name: ing.ingredient.name,
+              name: ing?.ingredient?.name,
               quantity: ing.quantity,
               unit: ing.unit
             }
@@ -100,8 +100,9 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
     setIngredients(updated);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
     try {
+      event.preventDefault();
       await updateRecipe({
         variables: {
           id: Number(recipe.id),
@@ -246,7 +247,7 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
                   <TextField
                     label="Ingredient"
                     fullWidth
-                    value={ingredient.name}
+                    value={ingredient.name || ""}
                     onChange={(e) =>
                       handleIngredientChange(index, "name", e.target.value)
                     }
@@ -259,7 +260,7 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
                     slotProps={{
                       htmlInput: { min: 0 },
                     }}
-                    value={ingredient.quantity}
+                    value={ingredient.quantity || 0}
                     onChange={(e) =>
                       handleIngredientChange(
                         index,
@@ -272,7 +273,7 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
                   <TextField
                     label="Unit"
                     sx={{ width: 140 }}
-                    value={ingredient.unit}
+                    value={ingredient.unit || ""}
                     onChange={(e) =>
                       handleIngredientChange(index, "unit", e.target.value)
                     }

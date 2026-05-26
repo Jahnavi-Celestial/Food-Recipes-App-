@@ -22,8 +22,8 @@ export class Recipe{
     description!: string;
 
     @Field(()=>Int, {nullable: true})
-    @Column({name: "cooking_time", type: "int", nullable: true})
-    cooking_time?: number;
+    @Column({name: "cooking_time", type: "int", nullable: false})
+    cooking_time!: number;
 
     @Field(()=>String, {nullable: true})
     @Column({type: "text", nullable: true})

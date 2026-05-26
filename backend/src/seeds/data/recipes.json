@@ -6,11 +6,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": false,
     "userIndex": 1,
-    "tags": ["Italian", "Pasta"],
+    "tags": ["italian", "pasta"],
     "ingredients": [
-      { "name": "Spaghetti", "quantity": 400, "unit": "g" },
-      { "name": "Minced Beef", "quantity": 500, "unit": "g" },
-      { "name": "Chopped Tomatoes", "quantity": 400, "unit": "g" }
+      { "name": "spaghetti", "quantity": 400, "unit": "g" },
+      { "name": "minced Beef", "quantity": 500, "unit": "g" },
+      { "name": "chopped tomatoes", "quantity": 400, "unit": "g" }
     ]
   },
   {
@@ -20,11 +20,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 2,
-    "tags": ["Breakfast", "Healthy"],
+    "tags": ["breakfast", "healthy"],
     "ingredients": [
-      { "name": "Avocado", "quantity": 1, "unit": "piece" },
-      { "name": "Sourdough Bread", "quantity": 1, "unit": "slice" },
-      { "name": "Lemon Juice", "quantity": 1, "unit": "tbsp" }
+      { "name": "avocado", "quantity": 1, "unit": "piece" },
+      { "name": "sourdough bread", "quantity": 1, "unit": "slice" },
+      { "name": "lemon juice", "quantity": 1, "unit": "tbsp" }
     ]
   },
   {
@@ -34,11 +34,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 3,
-    "tags": ["Soup", "Vegetarian"],
+    "tags": ["soup", "vegetarian"],
     "ingredients": [
-      { "name": "Crushed Tomatoes", "quantity": 800, "unit": "g" },
-      { "name": "Vegetable Broth", "quantity": 500, "unit": "ml" },
-      { "name": "Heavy Cream", "quantity": 50, "unit": "ml" }
+      { "name": "crushed tomatoes", "quantity": 800, "unit": "g" },
+      { "name": "vegetable broth", "quantity": 500, "unit": "ml" },
+      { "name": "heavy cream", "quantity": 50, "unit": "ml" }
     ]
   },
   {
@@ -48,11 +48,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": false,
     "userIndex": 1,
-    "tags": ["Indian", "Main Course"],
+    "tags": ["indian", "main course"],
     "ingredients": [
-      { "name": "Chicken Breast", "quantity": 500, "unit": "g" },
-      { "name": "Coconut Milk", "quantity": 400, "unit": "ml" },
-      { "name": "Curry Powder", "quantity": 3, "unit": "tbsp" }
+      { "name": "chicken breast", "quantity": 500, "unit": "g" },
+      { "name": "coconut milk", "quantity": 400, "unit": "ml" },
+      { "name": "curry powder", "quantity": 3, "unit": "tbsp" }
     ]
   },
   {
@@ -62,11 +62,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 4,
-    "tags": ["Asian", "Vegan"],
+    "tags": ["asian", "vegan"],
     "ingredients": [
-      { "name": "Mixed Vegetables", "quantity": 300, "unit": "g" },
-      { "name": "Noodles", "quantity": 200, "unit": "g" },
-      { "name": "Soy Sauce", "quantity": 3, "unit": "tbsp" }
+      { "name": "mixed vegetables", "quantity": 300, "unit": "g" },
+      { "name": "noodles", "quantity": 200, "unit": "g" },
+      { "name": "soy sauce", "quantity": 3, "unit": "tbsp" }
     ]
   },
   {
@@ -76,11 +76,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 5,
-    "tags": ["Breakfast", "Sweet"],
+    "tags": ["breakfast", "sweet"],
     "ingredients": [
-      { "name": "Bananas", "quantity": 2, "unit": "pieces" },
-      { "name": "Flour", "quantity": 100, "unit": "g" },
-      { "name": "Milk", "quantity": 100, "unit": "ml" }
+      { "name": "bananas", "quantity": 2, "unit": "pieces" },
+      { "name": "flour", "quantity": 100, "unit": "g" },
+      { "name": "milk", "quantity": 100, "unit": "ml" }
     ]
   },
   {
@@ -90,11 +90,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": false,
     "userIndex": 2,
-    "tags": ["Salad", "Mediterranean"],
+    "tags": ["salad", "mediterranean"],
     "ingredients": [
-      { "name": "Cucumber", "quantity": 1, "unit": "piece" },
-      { "name": "Tomatoes", "quantity": 3, "unit": "pieces" },
-      { "name": "Feta Cheese", "quantity": 100, "unit": "g" }
+      { "name": "cucumber", "quantity": 1, "unit": "piece" },
+      { "name": "tomatoes", "quantity": 3, "unit": "pieces" },
+      { "name": "feta cheese", "quantity": 100, "unit": "g" }
     ]
   },
   {
@@ -104,11 +104,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": false,
     "userIndex": 1,
-    "tags": ["Italian", "Dinner"],
+    "tags": ["italian", "dinner"],
     "ingredients": [
-      { "name": "Arborio Rice", "quantity": 250, "unit": "g" },
-      { "name": "Mushrooms", "quantity": 200, "unit": "g" },
-      { "name": "Vegetable Broth", "quantity": 750, "unit": "ml" }
+      { "name": "arborio rice", "quantity": 250, "unit": "g" },
+      { "name": "mushrooms", "quantity": 200, "unit": "g" },
+      { "name": "vegetable broth", "quantity": 750, "unit": "ml" }
     ]
   },
   {
@@ -118,11 +118,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 3,
-    "tags": ["Mexican", "Dinner"],
+    "tags": ["mexican", "dinner"],
     "ingredients": [
-      { "name": "Minced Beef", "quantity": 400, "unit": "g" },
-      { "name": "Taco Shells", "quantity": 8, "unit": "pieces" },
-      { "name": "Taco Seasoning", "quantity": 1, "unit": "packet" }
+      { "name": "minced beef", "quantity": 400, "unit": "g" },
+      { "name": "taco shells", "quantity": 8, "unit": "pieces" },
+      { "name": "taco seasoning", "quantity": 1, "unit": "packet" }
     ]
   },
   {
@@ -132,11 +132,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 5,
-    "tags": ["Baking", "Dessert"],
+    "tags": ["baking", "dessert"],
     "ingredients": [
-      { "name": "Dark Chocolate", "quantity": 200, "unit": "g" },
-      { "name": "Butter", "quantity": 200, "unit": "g" },
-      { "name": "Sugar", "quantity": 300, "unit": "g" }
+      { "name": "dark chocolate", "quantity": 200, "unit": "g" },
+      { "name": "butter", "quantity": 200, "unit": "g" },
+      { "name": "sugar", "quantity": 300, "unit": "g" }
     ]
   },
   {
@@ -146,11 +146,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 1,
-    "tags": ["Seafood", "Healthy"],
+    "tags": ["seafood", "healthy"],
     "ingredients": [
-      { "name": "Salmon Fillet", "quantity": 2, "unit": "pieces" },
-      { "name": "Olive Oil", "quantity": 2, "unit": "tbsp" },
-      { "name": "Lemon", "quantity": 1, "unit": "piece" }
+      { "name": "salmon fillet", "quantity": 2, "unit": "pieces" },
+      { "name": "olive oil", "quantity": 2, "unit": "tbsp" },
+      { "name": "lemon", "quantity": 1, "unit": "piece" }
     ]
   },
   {
@@ -160,11 +160,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": false,
     "userIndex": 2,
-    "tags": ["Beef", "Dinner"],
+    "tags": ["beef", "dinner"],
     "ingredients": [
-      { "name": "Ribeye Steak", "quantity": 1, "unit": "piece" },
-      { "name": "Butter", "quantity": 3, "unit": "tbsp" },
-      { "name": "Garlic", "quantity": 2, "unit": "cloves" }
+      { "name": "ribeye steak", "quantity": 1, "unit": "piece" },
+      { "name": "butter", "quantity": 3, "unit": "tbsp" },
+      { "name": "garlic", "quantity": 2, "unit": "cloves" }
     ]
   },
   {
@@ -174,11 +174,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 4,
-    "tags": ["Salad", "Italian"],
+    "tags": ["salad", "italian"],
     "ingredients": [
-      { "name": "Tomatoes", "quantity": 3, "unit": "pieces" },
-      { "name": "Mozzarella", "quantity": 200, "unit": "g" },
-      { "name": "Basil", "quantity": 1, "unit": "bunch" }
+      { "name": "tomatoes", "quantity": 3, "unit": "pieces" },
+      { "name": "mozzarella", "quantity": 200, "unit": "g" },
+      { "name": "basil", "quantity": 1, "unit": "bunch" }
     ]
   },
   {
@@ -188,11 +188,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 3,
-    "tags": ["Comfort Food", "Pasta"],
+    "tags": ["comfort food", "pasta"],
     "ingredients": [
-      { "name": "Macaroni", "quantity": 400, "unit": "g" },
-      { "name": "Cheddar Cheese", "quantity": 200, "unit": "g" },
-      { "name": "Milk", "quantity": 500, "unit": "ml" }
+      { "name": "macaroni", "quantity": 400, "unit": "g" },
+      { "name": "cheddar cheese", "quantity": 200, "unit": "g" },
+      { "name": "milk", "quantity": 500, "unit": "ml" }
     ]
   },
   {
@@ -202,11 +202,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 1,
-    "tags": ["Salad", "Chicken"],
+    "tags": ["salad", "chicken"],
     "ingredients": [
-      { "name": "Romaine Lettuce", "quantity": 1, "unit": "head" },
-      { "name": "Caesar Dressing", "quantity": 4, "unit": "tbsp" },
-      { "name": "Chicken Breast", "quantity": 1, "unit": "piece" }
+      { "name": "romaine lettuce", "quantity": 1, "unit": "head" },
+      { "name": "caesar dressing", "quantity": 4, "unit": "tbsp" },
+      { "name": "chicken breast", "quantity": 1, "unit": "piece" }
     ]
   },
   {
@@ -216,11 +216,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 5,
-    "tags": ["Baking", "Dessert"],
+    "tags": ["baking", "dessert"],
     "ingredients": [
-      { "name": "Apples", "quantity": 5, "unit": "pieces" },
-      { "name": "Pastry Dough", "quantity": 2, "unit": "sheets" },
-      { "name": "Cinnamon", "quantity": 1, "unit": "tbsp" }
+      { "name": "apples", "quantity": 5, "unit": "pieces" },
+      { "name": "pastry dough", "quantity": 2, "unit": "sheets" },
+      { "name": "cinnamon", "quantity": 1, "unit": "tbsp" }
     ]
   },
   {
@@ -230,11 +230,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": false,
     "userIndex": 4,
-    "tags": ["Vegetarian", "Baking"],
+    "tags": ["vegetarian", "baking"],
     "ingredients": [
-      { "name": "Eggs", "quantity": 4, "unit": "pieces" },
-      { "name": "Pie Crust", "quantity": 1, "unit": "sheet" },
-      { "name": "Spinach", "quantity": 100, "unit": "g" }
+      { "name": "eggs", "quantity": 4, "unit": "pieces" },
+      { "name": "pie crust", "quantity": 1, "unit": "sheet" },
+      { "name": "spinach", "quantity": 100, "unit": "g" }
     ]
   },
   {
@@ -244,11 +244,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": false,
     "userIndex": 2,
-    "tags": ["Breakfast", "Sweet"],
+    "tags": ["breakfast", "sweet"],
     "ingredients": [
-      { "name": "Bread", "quantity": 4, "unit": "slices" },
-      { "name": "Eggs", "quantity": 2, "unit": "pieces" },
-      { "name": "Milk", "quantity": 50, "unit": "ml" }
+      { "name": "bread", "quantity": 4, "unit": "slices" },
+      { "name": "eggs", "quantity": 2, "unit": "pieces" },
+      { "name": "milk", "quantity": 50, "unit": "ml" }
     ]
   },
   {
@@ -258,11 +258,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 1,
-    "tags": ["Italian", "Pasta"],
+    "tags": ["italian", "pasta"],
     "ingredients": [
-      { "name": "Fettuccine", "quantity": 400, "unit": "g" },
-      { "name": "Heavy Cream", "quantity": 200, "unit": "ml" },
-      { "name": "Parmesan", "quantity": 100, "unit": "g" }
+      { "name": "fettuccine", "quantity": 400, "unit": "g" },
+      { "name": "heavy cream", "quantity": 200, "unit": "ml" },
+      { "name": "parmesan", "quantity": 100, "unit": "g" }
     ]
   },
   {
@@ -272,11 +272,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 3,
-    "tags": ["Breakfast", "Middle Eastern"],
+    "tags": ["breakfast", "middle eastern"],
     "ingredients": [
-      { "name": "Eggs", "quantity": 4, "unit": "pieces" },
-      { "name": "Chopped Tomatoes", "quantity": 400, "unit": "g" },
-      { "name": "Bell Pepper", "quantity": 1, "unit": "piece" }
+      { "name": "eggs", "quantity": 4, "unit": "pieces" },
+      { "name": "chopped tomatoes", "quantity": 400, "unit": "g" },
+      { "name": "bell pepper", "quantity": 1, "unit": "piece" }
     ]
   },
   {
@@ -286,11 +286,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 4,
-    "tags": ["Soup", "Vegan"],
+    "tags": ["soup", "vegan"],
     "ingredients": [
-      { "name": "Butternut Squash", "quantity": 1, "unit": "piece" },
-      { "name": "Vegetable Broth", "quantity": 750, "unit": "ml" },
-      { "name": "Onion", "quantity": 1, "unit": "piece" }
+      { "name": "butternut squash", "quantity": 1, "unit": "piece" },
+      { "name": "vegetable broth", "quantity": 750, "unit": "ml" },
+      { "name": "onion", "quantity": 1, "unit": "piece" }
     ]
   },
   {
@@ -302,9 +302,9 @@
     "userIndex": 2,
     "tags": ["American", "Dinner"],
     "ingredients": [
-      { "name": "Pork Shoulder", "quantity": 1.5, "unit": "kg" },
-      { "name": "BBQ Sauce", "quantity": 300, "unit": "ml" },
-      { "name": "Apple Cider Vinegar", "quantity": 50, "unit": "ml" }
+      { "name": "pork shoulder", "quantity": 1.5, "unit": "kg" },
+      { "name": "bbq sauce", "quantity": 300, "unit": "ml" },
+      { "name": "apple cider vinegar", "quantity": 50, "unit": "ml" }
     ]
   },
   {
@@ -314,11 +314,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 5,
-    "tags": ["Side Dish", "Italian"],
+    "tags": ["side dish", "italian"],
     "ingredients": [
-      { "name": "Baguette", "quantity": 1, "unit": "piece" },
-      { "name": "Butter", "quantity": 100, "unit": "g" },
-      { "name": "Garlic", "quantity": 3, "unit": "cloves" }
+      { "name": "baguette", "quantity": 1, "unit": "piece" },
+      { "name": "butter", "quantity": 100, "unit": "g" },
+      { "name": "garlic", "quantity": 3, "unit": "cloves" }
     ]
   },
   {
@@ -328,11 +328,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 5,
-    "tags": ["Baking", "Sweet"],
+    "tags": ["baking", "sweet"],
     "ingredients": [
-      { "name": "Self-raising Flour", "quantity": 200, "unit": "g" },
-      { "name": "Butter", "quantity": 200, "unit": "g" },
-      { "name": "Lemons", "quantity": 2, "unit": "pieces" }
+      { "name": "self-raising flour", "quantity": 200, "unit": "g" },
+      { "name": "butter", "quantity": 200, "unit": "g" },
+      { "name": "lemons", "quantity": 2, "unit": "pieces" }
     ]
   },
   {
@@ -342,11 +342,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 1,
-    "tags": ["Soup", "Chicken"],
+    "tags": ["soup", "chicken"],
     "ingredients": [
-      { "name": "Chicken Breast", "quantity": 300, "unit": "g" },
-      { "name": "Chicken Broth", "quantity": 1, "unit": "liter" },
-      { "name": "Noodles", "quantity": 150, "unit": "g" }
+      { "name": "chicken breast", "quantity": 300, "unit": "g" },
+      { "name": "chicken broth", "quantity": 1, "unit": "liter" },
+      { "name": "noodles", "quantity": 150, "unit": "g" }
     ]
   },
   {
@@ -356,11 +356,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 1,
-    "tags": ["Italian", "Dinner"],
+    "tags": ["italian", "dinner"],
     "ingredients": [
-      { "name": "Pizza Dough", "quantity": 1, "unit": "ball" },
-      { "name": "Tomato Sauce", "quantity": 100, "unit": "ml" },
-      { "name": "Mozzarella Cheese", "quantity": 150, "unit": "g" }
+      { "name": "pizza dough", "quantity": 1, "unit": "ball" },
+      { "name": "tomato sauce", "quantity": 100, "unit": "ml" },
+      { "name": "mozzarella cheese", "quantity": 150, "unit": "g" }
     ]
   },
   {
@@ -370,11 +370,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 2,
-    "tags": ["Russian", "Dinner"],
+    "tags": ["russian", "dinner"],
     "ingredients": [
-      { "name": "Beef Strips", "quantity": 500, "unit": "g" },
-      { "name": "Mushrooms", "quantity": 200, "unit": "g" },
-      { "name": "Sour Cream", "quantity": 150, "unit": "g" }
+      { "name": "beef strips", "quantity": 500, "unit": "g" },
+      { "name": "mushrooms", "quantity": 200, "unit": "g" },
+      { "name": "sour cream", "quantity": 150, "unit": "g" }
     ]
   },
   {
@@ -384,11 +384,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 5,
-    "tags": ["Baking", "Sweet"],
+    "tags": ["baking", "sweet"],
     "ingredients": [
-      { "name": "Flour", "quantity": 200, "unit": "g" },
-      { "name": "Butter", "quantity": 150, "unit": "g" },
-      { "name": "Chocolate Chips", "quantity": 100, "unit": "g" }
+      { "name": "flour", "quantity": 200, "unit": "g" },
+      { "name": "butter", "quantity": 150, "unit": "g" },
+      { "name": "chocolate chips", "quantity": 100, "unit": "g" }
     ]
   },
   {
@@ -398,11 +398,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 4,
-    "tags": ["Asian", "Chicken"],
+    "tags": ["asian", "chicken"],
     "ingredients": [
-      { "name": "Chicken Thighs", "quantity": 500, "unit": "g" },
-      { "name": "Soy Sauce", "quantity": 50, "unit": "ml" },
-      { "name": "Honey", "quantity": 2, "unit": "tbsp" }
+      { "name": "chicken thighs", "quantity": 500, "unit": "g" },
+      { "name": "soy sauce", "quantity": 50, "unit": "ml" },
+      { "name": "honey", "quantity": 2, "unit": "tbsp" }
     ]
   },
   {
@@ -412,11 +412,11 @@
     "image": "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe",
     "is_public": true,
     "userIndex": 2,
-    "tags": ["Vegetable Dish", "Side Dish"],
+    "tags": ["vegetable dish", "Side Dish"],
     "ingredients": [
-      { "name": "Brussels Sprouts", "quantity": 400, "unit": "g" },
-      { "name": "Olive Oil", "quantity": 2, "unit": "tbsp" },
-      { "name": "Garlic", "quantity": 3, "unit": "cloves" }
+      { "name": "brussels sprouts", "quantity": 400, "unit": "g" },
+      { "name": "olive oil", "quantity": 2, "unit": "tbsp" },
+      { "name": "garlic", "quantity": 3, "unit": "cloves" }
     ]
   }
 ]

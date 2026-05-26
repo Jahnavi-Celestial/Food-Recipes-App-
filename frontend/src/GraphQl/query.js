@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const Recipes = gql`
-  query GetRecipes {
-    recipes {
+  query GetRecipes{
+    recipes(limit: $limit, skip: $skip) {
       id
       title
       description
@@ -13,6 +13,7 @@ export const Recipes = gql`
         id
         quantity
         unit
+        name
         ingredient {
           id
           name
@@ -22,7 +23,7 @@ export const Recipes = gql`
         id
         name
       }
-      savedBy{
+      savedBy {
         id
       }
     }
@@ -30,8 +31,8 @@ export const Recipes = gql`
 `;
 
 export const MyRecipes = gql`
-  query MyRecipes {
-    myRecipes {
+  query MyRecipes{
+    myRecipes{
       id
       title
       description
@@ -51,7 +52,7 @@ export const MyRecipes = gql`
         id
         name
       }
-      savedBy{
+      savedBy {
         id
       }
     }
@@ -59,7 +60,7 @@ export const MyRecipes = gql`
 `;
 
 export const MySavedRecipes = gql`
-  query GetMySavedRecipes {
+  query GetMySavedRecipes{
     mySavedRecipes {
       id
       title
@@ -106,8 +107,12 @@ export const Tags = gql`
 `;
 
 export const RecipeByTags = gql`
-  query RecipeByTags($tags: [String!]!) {
-    recipeByTags(tags: $tags) {
+  query RecipeByTags(
+    $tags: [String!]!
+  ) {
+    recipeByTags(
+      tags: $tags
+    ) {
       id
       title
       description
@@ -180,5 +185,63 @@ export const PopularRecipes = gql`
         name
       }
     }
+  }
+`;
+
+export const FilterRecipes = gql`
+  query FilterRecipes(
+    $mode: String!
+    $search: String
+    $tags: [String!]
+    $sortBy: String
+    $order: String
+    $maxCookTime: Int
+    $maxIngredients: Int
+    $limit: Int!
+    $skip: Int!
+  ) {
+    filterRecipes(
+      mode: $mode
+      search: $search
+      tags: $tags
+      sortBy: $sortBy
+      order: $order
+      maxCookTime: $maxCookTime
+      maxIngredients: $maxIngredients
+      limit: $limit
+      skip: $skip
+    ) {
+      id
+      title
+      description
+      image
+      cooking_time
+      created_at
+
+      tags {
+        id
+        name
+      }
+
+      ingredients {
+        id
+        quantity
+        unit
+        ingredient{
+          id
+          name
+        }
+      }
+
+      savedBy {
+        id
+      }
+    }
+  }
+`;
+
+export const SearchTags = gql`
+  query SearchTags($search: String!) {
+    searchTags(search: $search)
   }
 `;

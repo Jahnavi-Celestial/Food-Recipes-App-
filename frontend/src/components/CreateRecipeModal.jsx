@@ -12,7 +12,6 @@ import {
   Switch,
   Box,
   Chip,
-  CircularProgress,
   Autocomplete,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -20,7 +19,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { useMutation, useQuery } from "@apollo/client/react";
 import { useState } from "react";
 import { CreateRecipe } from "../GraphQl/mutation";
-import { Tags } from "../GraphQl/query";
+import { MyRecipes, Recipes } from "../GraphQl/query"; 
+import { SearchTags } from "../GraphQl/query";
+import { useDebounce } from "../Hook/useDebounce";
 
 const CreateRecipeModal = ({ open, onClose }) => {
   const [title, setTitle] = useState("");
@@ -31,12 +32,24 @@ const CreateRecipeModal = ({ open, onClose }) => {
   const [ingredients, setIngredients] = useState([
     { name: "", quantity: 0, unit: "" },
   ]);
-  const [selectedTags, setSelectedTags] = useState([]);
 
-  const [createRecipe, { loading }] = useMutation(CreateRecipe);
-  const { data: tagData, loading: tagsLoading } = useQuery(Tags);
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
+  const debouncedTagInput = useDebounce(tagInput, 400);
 
-  const tagOptions = tagData?.tags?.map((t) => t.name) || [];
+  const { data: tagData } = useQuery(SearchTags, {
+    variables: {
+      search: debouncedTagInput,
+    },
+    skip: debouncedTagInput.length < 1,
+  });
+
+  const [createRecipe, { loading }] = useMutation(CreateRecipe, {
+    refetchQueries: [
+      { query: MyRecipes },
+      { query: Recipes }
+    ]
+  });
 
   const addIngredient = () => {
     setIngredients([...ingredients, { name: "", quantity: 0, unit: "" }]);
@@ -54,21 +67,6 @@ const CreateRecipeModal = ({ open, onClose }) => {
     setIngredients(updated);
   };
 
-  const handleTagChange = (event, newValue) => {
-    const unique = [];
-
-    newValue.forEach((tag) => {
-      const t = tag.trim();
-      const exists = unique.find((x) => x.toLowerCase() === t.toLowerCase());
-
-      if (!exists && t !== "") {
-        unique.push(t);
-      }
-    });
-
-    setSelectedTags(unique);
-  };
-
   const handleSubmit = async () => {
     try {
       await createRecipe({
@@ -78,10 +76,8 @@ const CreateRecipeModal = ({ open, onClose }) => {
           cooking_time: Number(cookingTime),
           image,
           is_public: isPublic,
-
           ingredients: ingredients.filter((i) => i.name.trim() !== ""),
-
-          tags: selectedTags.map((t) => t.trim()),
+          tags: tags.map((t) => t.trim()), 
         },
       });
 
@@ -91,11 +87,12 @@ const CreateRecipeModal = ({ open, onClose }) => {
       setImage("");
       setIsPublic(true);
       setIngredients([{ name: "", quantity: 0, unit: "" }]);
-      setSelectedTags([]);
+      setTags([]);
+      setTagInput(""); 
 
       onClose();
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -140,7 +137,7 @@ const CreateRecipeModal = ({ open, onClose }) => {
           />
 
           <FormControlLabel
-            control={
+            control = {
               <Switch
                 checked={isPublic}
                 onChange={(e) => setIsPublic(e.target.checked)}
@@ -151,38 +148,28 @@ const CreateRecipeModal = ({ open, onClose }) => {
 
           <Box>
             <Typography mb={1}>Tags</Typography>
-
             <Autocomplete
               multiple
               freeSolo
-              options={tagOptions}
-              value={selectedTags}
-              onChange={handleTagChange}
+              options={tagData?.searchTags || []}
+              value={tags}
+              inputValue={tagInput}
+              onInputChange={(e, value) => setTagInput(value)}
+              onChange={(e, value) => setTags(value)}
               renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip
-                    label={option}
-                    {...getTagProps({ index })}
-                    key={`${option}-${index}`}
-                  />
-                ))
+                value.map((option, index) => {
+                  const { key, ...tagProps } = getTagProps({ index });
+                  return <Chip key={key} label={option} {...tagProps} />;
+                })
               }
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Select or create tags"
-                  placeholder="Type and press enter"
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        {tagsLoading && <CircularProgress size={18} />}
-                        {params?.InputProps?.endAdornment}
-                      </>
-                    ),
-                  }}
+                  label="Tags"
+                  placeholder="Type tags..."
                 />
               )}
+              sx={{ width: "100%" }}
             />
           </Box>
 
@@ -216,9 +203,6 @@ const CreateRecipeModal = ({ open, onClose }) => {
                   <TextField
                     label="Ingredient"
                     fullWidth
-                    slotProps={{
-                      htmlInput: { min: 0 },
-                    }}
                     value={ingredient.name}
                     onChange={(e) =>
                       handleIngredientChange(index, "name", e.target.value)
@@ -241,19 +225,10 @@ const CreateRecipeModal = ({ open, onClose }) => {
                       )
                     }
                   />
-
-                  <TextField
-                    label="Unit"
-                    sx={{ width: 140 }}
-                    value={ingredient.unit}
-                    onChange={(e) =>
-                      handleIngredientChange(index, "unit", e.target.value)
-                    }
-                  />
-
-                  <IconButton
-                    color="error"
+                  
+                  <IconButton 
                     onClick={() => removeIngredient(index)}
+                    color="red"
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -263,18 +238,9 @@ const CreateRecipeModal = ({ open, onClose }) => {
           </Box>
         </Stack>
       </DialogContent>
-
-      <DialogActions sx={{ p: 3 }}>
-        <Button onClick={onClose} sx={{ color: "#2E7D32" }}>
-          Cancel
-        </Button>
-
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          disabled={loading}
-          sx={{ bgcolor: "#2E7D32" }}
-        >
+      <DialogActions>
+        <Button onClick={onClose} disabled={loading} sx={{color: "#2E7D32"}}>Cancel</Button>
+        <Button onClick={handleSubmit} variant="contained" disabled={loading} sx={{bgcolor: "#2E7D32"}}>
           {loading ? "Creating..." : "Create Recipe"}
         </Button>
       </DialogActions>
@@ -283,3 +249,4 @@ const CreateRecipeModal = ({ open, onClose }) => {
 };
 
 export default CreateRecipeModal;
+

@@ -14,23 +14,27 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { MySavedRecipes, RecipeDetail } from "../GraphQl/query";
 import { useAuth } from "../context/AuthContext";
 import { SaveRecipe, UnSaveRecipe } from "../GraphQl/mutation";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 const RecipeDetailPage = () => {
   const { isAuthenticated } = useAuth();
   const { id } = useParams();
 
-  const { error, data } = useQuery(RecipeDetail, {
+  const { loading, data } = useQuery(RecipeDetail, {
     variables: { id: Number(id) },
   });
 
   const {data: savedData, refetch: refetchSaved} = useQuery(MySavedRecipes,{skip: !isAuthenticated})
-  const [saveMutation] = useMutation(SaveRecipe)
-  const [unsaveMutation] = useMutation(UnSaveRecipe)
+  const [saveMutation] = useMutation(SaveRecipe, {
+    onCompleted: ()=>{refetchSaved()}
+  })
+  const [unsaveMutation] = useMutation(UnSaveRecipe,  {
+    onCompleted: ()=>{refetchSaved()},
+  })
 
   const isSaved = useMemo(()=>{
     if(!savedData?.mySavedRecipes || !data?.recipeDetail) return false;
@@ -41,18 +45,43 @@ const RecipeDetailPage = () => {
     try{
         if(isSaved){
             await unsaveMutation({variables: {recipe_id: Number(id)}})
+            refetchSaved({ status: 'ACTIVE' });
         }
         else{
             await saveMutation({variables: {recipe_id: Number(id)}})
+            refetchSaved({ status: 'ACTIVE' });
         }
-        refetchSaved()
+        refetchSaved({ status: 'ACTIVE' });
     }catch(err){
         console.log(err.message)
     }
   }
 
-  if (error == "Private Recipe") return <div>Private Recipe</div>;
-  if (error == "recipe not exist") return <div>Recipe Not Exist</div>;
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.triggerRefetch) {
+      refetchSaved({status: "ACTIVE"});
+    }
+  }, [location.state, refetchSaved]);
+
+  if (loading) {
+      return (
+        <Box
+          sx={{
+            width: "100vw",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h5" sx={{ color: "gray", fontWeight: "bold" }}>
+            Loading...
+          </Typography>
+        </Box>
+      );
+    }
 
   return (
     <Container
@@ -150,32 +179,6 @@ const RecipeDetailPage = () => {
           </Typography>
           <Typography variant="body1" sx={{ lineHeight: 1.7, color: "" }}>
             {data?.recipeDetail.description}
-          </Typography>
-          <Typography>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero
-            totam provident eveniet quis in odit non quae rem eaque dolorum
-            commodi laboriosam, alias consequuntur adipisci veritatis, amet
-            itaque. Dolorem magnam sunt sequi pariatur soluta? Veritatis
-            possimus nulla necessitatibus libero voluptatum animi vitae sit
-            accusantium aliquam ex omnis mollitia commodi perspiciatis
-            consequatur voluptates facere ad, nam sed pariatur cupiditate
-            voluptas corrupti? Dignissimos ad id minima pariatur! Sint minus
-            deserunt corrupti voluptatem nesciunt cumque atque repellendus
-            repudiandae dolor sapiente magnam voluptatibus accusantium deleniti
-            non maiores doloribus aspernatur est impedit dolore, dolorum aliquam
-            adipisci delectus pariatur. Voluptas blanditiis consectetur porro
-            commodi ratione illo? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Amet nemo molestiae sunt vitae odit, accusantium
-            possimus dignissimos? Accusantium corrupti dolore nostrum, eveniet
-            asperiores vel ratione, dolor, culpa iure ullam at. Lorem ipsum
-            dolor sit amet consectetur adipisicing elit. Quia, voluptate in
-            labore fuga at temporibus suscipit unde reprehenderit autem ab sint
-            aliquid voluptatem dolorem, velit ratione laborum repudiandae
-            repellat rem!
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim minima iste itaque esse officiis dicta, maiores inventore! Nostrum cumque accusantium perspiciatis voluptates neque ipsum quo! Eveniet, numquam. Perspiciatis, deleniti quas.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto repudiandae assumenda reiciendis velit accusantium odio aliquid rerum, vel expedita voluptatem nulla autem sint, quisquam culpa ipsam architecto animi necessitatibus impedit!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem nemo voluptate dolores eveniet autem ad labore officia est ratione laborum, esse voluptatem veritatis! Vero optio cum excepturi ab reprehenderit quasi.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam ratione quasi reprehenderit modi ab recusandae itaque nesciunt, et, quam quaerat est animi iusto reiciendis, perferendis eos! Cumque ipsa eius quae.
           </Typography>
         </Box>
       </Stack>
