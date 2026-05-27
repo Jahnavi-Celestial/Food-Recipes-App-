@@ -92,10 +92,11 @@ const MyRecipesPage = () => {
         p: 3,
         mt: 8,
         background: "linear-gradient(to bottom right, #E8F5E9, #FFFFFF)",
+        minHeight: "80vh"
       }}
     >
       <Typography variant="h4" mb={3} sx={{ pb: "20px", ml: 10}}>
-        Recipes
+        MY Recipes
       </Typography>
 
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3, pb: "30px", justifyContent: "center"}}>

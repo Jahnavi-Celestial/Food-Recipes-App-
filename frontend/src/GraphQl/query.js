@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const Recipes = gql`
   query GetRecipes{
-    recipes(limit: $limit, skip: $skip) {
+    recipes{
       id
       title
       description
@@ -215,6 +215,7 @@ export const FilterRecipes = gql`
       title
       description
       image
+      is_public
       cooking_time
       created_at
 

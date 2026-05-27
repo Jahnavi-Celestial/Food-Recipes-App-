@@ -36,9 +36,20 @@ export const CreateRecipe = gql`
       is_public: $is_public
       ingredients: $ingredients
       tags: $tags
-    ) {
+    ){
       id
       title
+      tags{
+        id
+        name
+      }
+      ingredients{
+        ingredient{
+        name
+        }
+        quantity
+        unit
+      }
     }
   }
 `;

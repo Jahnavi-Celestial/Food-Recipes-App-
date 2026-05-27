@@ -52,13 +52,19 @@ const TagPage = () => {
   });
 
   const handleSearch = () => {
-    const selectedIds = Array.from(selectedRows.ids);
+    let allTags = []
+    if(!selectedRows.ids){
+      allTags = [...new Set([...tagstate])]
+    }
+    else{
+    const selectedIds = [...selectedRows.ids];
 
     const tableSelectedTags = rows
       .filter((row) => selectedIds.includes(row.id))
-      .map((row) => row.name);
+      .map((row) => row.name) || [];
 
-    const allTags = [...new Set([...tagstate, ...tableSelectedTags])];
+    allTags = [...new Set([...tagstate, ...tableSelectedTags])];
+    }
 
     if (allTags.length === 0) return;
 

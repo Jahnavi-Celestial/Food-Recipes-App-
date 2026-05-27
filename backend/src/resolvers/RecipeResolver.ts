@@ -7,6 +7,7 @@ import { Tag } from "../entity/Tag.ts";
 import { Note } from "../entity/Note.ts";
 import { RecipeIngredient } from "../entity/RecipeIngredient.ts";
 import { RecipeIngredientInput } from "../entity/RecipeIngredientInput.ts";
+import { In } from "typeorm";
 
 @Resolver()
 export class RecipeResolver {
@@ -23,9 +24,7 @@ export class RecipeResolver {
   }
 
   @Query(() => [Recipe])
-  async myRecipes(
-    @Ctx() context: any,
-  ): Promise<Recipe[]> {
+  async myRecipes(@Ctx() context: any): Promise<Recipe[]> {
     const recipeRepo = AppDataSource.getRepository(Recipe);
     if (!context.userId) {
       throw new Error("Unauthorized");
@@ -37,9 +36,7 @@ export class RecipeResolver {
   }
 
   @Query(() => [Recipe])
-  async mySavedRecipes(
-    @Ctx() context: any,
-  ): Promise<Recipe[]> {
+  async mySavedRecipes(@Ctx() context: any): Promise<Recipe[]> {
     const savedRecipeRepo = AppDataSource.getRepository(SavedRecipe);
 
     if (!context.userId) {
@@ -71,70 +68,71 @@ export class RecipeResolver {
     @Arg("tags", () => [String], { nullable: true }) tags: string[],
     @Ctx() context: any,
   ): Promise<Recipe> {
-    const recipeRepo = AppDataSource.getRepository(Recipe);
-    const ingRepo = AppDataSource.getRepository(Ingredient);
+    try {
+      const recipeRepo = AppDataSource.getRepository(Recipe);
+      const ingRepo = AppDataSource.getRepository(Ingredient);
 
-    if (!context.userId) {
-      throw new Error("Unauthorized");
-    }
-
-    const recipe = recipeRepo.create({
-      title,
-      description,
-      cooking_time,
-      image,
-      is_public,
-      user_id: context.userId,
-    });
-
-    const newRecipe = await recipeRepo.save(recipe);
-
-    const recipeIngRepo = AppDataSource.getRepository(RecipeIngredient);
-
-    let ingEntity: RecipeIngredient[] = [];
-
-    for (let item of ingredients || []) {
-      let ingredient = await ingRepo.findOne({
-        where: { name: item.name.toLowerCase() },
-      });
-
-      if (!ingredient) {
-        ingredient = ingRepo.create({ name: item.name.toLowerCase() });
-        ingredient = await ingRepo.save(ingredient);
+      if (!context.userId) {
+        throw new Error("Unauthorized");
       }
 
-      const recipeIngredient = new RecipeIngredient();
-
-      recipeIngredient.recipe_id = newRecipe.id;
-      recipeIngredient.ingredient_id = ingredient.id;
-      recipeIngredient.quantity = item.quantity || 0;
-      recipeIngredient.unit = item.unit || "";
-
-      await recipeIngRepo.save(recipeIngredient);
-
-      ingEntity.push(recipeIngredient);
-    }
-
-    newRecipe.ingredients = ingEntity;
-
-    const tagRepo = AppDataSource.getRepository(Tag);
-
-    let tagEntity = [];
-    for (let tagName of tags || []) {
-      const newName = tagName.trim().toLowerCase();
-      let tag = await tagRepo.findOne({
-        where: { name: newName },
+      const recipe = recipeRepo.create({
+        title,
+        description,
+        cooking_time,
+        image,
+        is_public,
+        user_id: context.userId,
       });
-      if (!tag) {
-        tag = tagRepo.create({ name: newName });
-        tag = await tagRepo.save(tag);
-      }
-      tagEntity.push(tag);
-    }
-    newRecipe.tags = tagEntity;
-    await recipeRepo.save(newRecipe);
 
-    return newRecipe;
+      const newRecipe = await recipeRepo.save(recipe);
+
+      const recipeIngRepo = AppDataSource.getRepository(RecipeIngredient);
+      let ingEntity: RecipeIngredient[] = [];
+
+      for (let item of ingredients || []) {
+        let ingredient = await ingRepo.findOne({
+          where: { name: item.name.toLowerCase() },
+        });
+
+        if (!ingredient) {
+          ingredient = ingRepo.create({ name: item.name.toLowerCase() });
+          ingredient = await ingRepo.save(ingredient);
+        }
+
+        const recipeIngredient = new RecipeIngredient();
+        recipeIngredient.recipe = newRecipe;
+        recipeIngredient.ingredient = ingredient;
+        recipeIngredient.quantity = item.quantity || 0;
+        recipeIngredient.unit = item.unit || "";
+
+        await recipeIngRepo.save(recipeIngredient);
+        ingEntity.push(recipeIngredient);
+      }
+
+      newRecipe.ingredients = ingEntity;
+
+      const tagRepo = AppDataSource.getRepository(Tag);
+
+      if (tags && tags.length > 0) {
+        const newName = tags.map((t) => t.trim().toLowerCase());
+
+        const existingTags = await tagRepo.find({
+          where: {
+            name: In(newName),
+          },
+        });
+
+        newRecipe.tags = existingTags;
+      } else {
+        newRecipe.tags = [];
+      }
+
+      return await recipeRepo.save(newRecipe);
+    } catch (err: any) {
+      console.error("Error saving tags:", err.message || err);
+      throw new Error(`Failed to save tags: ${err.message}`);
+    }
   }
 
   @Mutation(() => String)
@@ -150,90 +148,91 @@ export class RecipeResolver {
     @Arg("tags", () => [String], { nullable: true }) tags: string[],
     @Ctx() context: any,
   ) {
-    const recipeRepo = AppDataSource.getRepository(Recipe);
-    const ingRepo = AppDataSource.getRepository(Ingredient);
+    try {
+      const recipeRepo = AppDataSource.getRepository(Recipe);
+      const ingRepo = AppDataSource.getRepository(Ingredient);
 
-    if (!context.userId) {
-      throw new Error("Not authorized");
-    }
+      if (!context.userId) {
+        throw new Error("Not authorized");
+      }
 
-    let recipe = await recipeRepo.findOne({ where: { id } });
+      let recipe = await recipeRepo.findOne({ where: { id } });
 
-    if (!recipe) throw new Error("Not found");
+      if (!recipe) throw new Error("Not found");
 
-    if (recipe.user_id !== context.userId) {
-      throw new Error("Unauthorized");
-    }
+      if (recipe.user_id !== context.userId) {
+        throw new Error("Unauthorized");
+      }
 
-    recipe = {
-      ...recipe,
-      title,
-      description,
-      cooking_time,
-      image,
-      is_public,
-    };
+      recipe = {
+        ...recipe,
+        title,
+        description,
+        cooking_time,
+        image,
+        is_public,
+      };
 
-    await recipeRepo.save(recipe);
+      await recipeRepo.save(recipe);
 
-    const recipeIngRepo = AppDataSource.getRepository(RecipeIngredient);
+      const recipeIngRepo = AppDataSource.getRepository(RecipeIngredient);
 
-    await recipeIngRepo.delete({
-      recipe_id: recipe.id,
-    });
-
-    let newIng: RecipeIngredient[] = [];
-
-    for (let item of ingredients || []) {
-      let ingredient = await ingRepo.findOne({
-        where: { name: item.name },
+      await recipeIngRepo.delete({
+        recipe_id: recipe.id,
       });
 
-      if (!ingredient) {
-        ingredient = ingRepo.create({
-          name: item.name,
+      let newIng: RecipeIngredient[] = [];
+
+      for (let item of ingredients || []) {
+        let ingredient = await ingRepo.findOne({
+          where: { name: item.name },
         });
 
-        ingredient = await ingRepo.save(ingredient);
+        if (!ingredient) {
+          ingredient = ingRepo.create({
+            name: item.name,
+          });
+
+          ingredient = await ingRepo.save(ingredient);
+        }
+
+        const recipeIngredient = new RecipeIngredient();
+        recipeIngredient.recipe_id = recipe.id;
+        recipeIngredient.ingredient_id = ingredient.id;
+        recipeIngredient.quantity = item.quantity || 0;
+        recipeIngredient.unit = item.unit || "";
+
+        await recipeIngRepo.save(recipeIngredient);
+
+        newIng.push(recipeIngredient);
       }
 
-      const recipeIngredient = new RecipeIngredient();
-      recipeIngredient.recipe_id = recipe.id;
-      recipeIngredient.ingredient_id = ingredient.id;
-      recipeIngredient.quantity = item.quantity || 0;
-      recipeIngredient.unit = item.unit || "";
+      recipe.ingredients = newIng;
 
-      await recipeIngRepo.save(recipeIngredient);
+      await recipeRepo.save(recipe);
 
-      newIng.push(recipeIngredient);
-    }
+      const tagRepo = AppDataSource.getRepository(Tag);
 
-    recipe.ingredients = newIng;
+      if (tags && tags.length > 0) {
+        const newName = tags.map((t) => t.trim().toLowerCase());
 
-    await recipeRepo.save(recipe);
+        const existingTags = await tagRepo.find({
+          where: {
+            name: In(newName),
+          },
+        });
 
-    const tagRepo = AppDataSource.getRepository(Tag);
-
-    let tagEntity = [];
-    for (let tagName of tags || []) {
-      const newName = tagName.trim().toLowerCase();
-
-      let tag = await tagRepo.findOne({
-        where: { name: newName },
-      });
-
-      if (!tag) {
-        tag = tagRepo.create({ name: newName });
-        tag = await tagRepo.save(tag);
+        recipe.tags = existingTags;
+      } else {
+        recipe.tags = [];
       }
 
-      tagEntity.push(tag);
+      await recipeRepo.save(recipe);
+
+      return "Recipe Updated successfully";
+    } catch (err: any) {
+      console.log(err.message);
     }
-
-    recipe.tags = tagEntity;
-    await recipeRepo.save(recipe);
-
-    return "Recipe Updated successfully";
   }
 
   @Mutation(() => String)
@@ -440,9 +439,7 @@ export class RecipeResolver {
   }
 
   @Query(() => [Recipe])
-  async recipeByTags(
-    @Arg("tags", () => [String]) tags: string[],
-  ) {
+  async recipeByTags(@Arg("tags", () => [String]) tags: string[]) {
     const recipeRepo = AppDataSource.getRepository(Recipe);
 
     const newTags = tags.map((t) => t.trim().toLowerCase());
@@ -549,7 +546,7 @@ export class RecipeResolver {
         where: { user_id: ctx.userId },
         relations: ["ingredients", "ingredients.ingredient", "tags"],
 
-        ...(hasFilters ? {} : {skip, take: limit}),
+        ...(hasFilters ? {} : { skip, take: limit }),
       });
 
       recipes = recipesData;
@@ -558,13 +555,20 @@ export class RecipeResolver {
     if (mode === "saved") {
       if (!ctx.userId) throw new Error("Unauthorized");
 
-      const saved = await savedRepo.find({
+      const hasFilters =
+        search || tags?.length || maxCookTime || maxIngredients || sortBy;
+
+      const [saved, total] = await savedRepo.findAndCount({
         where: { user_id: ctx.userId },
-        relations: ["recipe",
-        "recipe.ingredients",
-        "recipe.ingredients.ingredient",
-        "recipe.tags",
-        "recipe.savedBy"],
+        relations: [
+          "recipe",
+          "recipe.ingredients",
+          "recipe.ingredients.ingredient",
+          "recipe.tags",
+          "recipe.savedBy",
+        ],
+
+        ...(hasFilters ? {} : { skip, take: limit }),
       });
 
       recipes = saved.map((s) => s.recipe);

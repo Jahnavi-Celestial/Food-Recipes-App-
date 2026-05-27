@@ -12,17 +12,18 @@ import {
   Switch,
   Box,
   Chip,
-  CircularProgress,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import { Autocomplete } from "@mui/material";
-import { useMutation, useQuery } from "@apollo/client/react";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client/react";
 import { useEffect, useState } from "react";
 import { UpdateRecipe } from "../GraphQl/mutation";
-import { Tags } from "../GraphQl/query";
+import { SearchTags } from "../GraphQl/query";
+import { useDebounce } from "../Hook/useDebounce";
 
 const EditRecipeModal = ({ open, onClose, recipe }) => {
+  const client = useApolloClient();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [cookingTime, setCookingTime] = useState(0);
@@ -35,12 +36,25 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
       unit: "",
     },
   ]);
-  const [selectedTags, setSelectedTags] = useState([]);
 
-  const [updateRecipe, { loading }] = useMutation(UpdateRecipe);
-  const { data: tagData, loading: tagsLoading } = useQuery(Tags);
+  const [updateRecipe, { loading }] = useMutation(UpdateRecipe, {
+    onCompleted: async () => {
+      await client.refetchQueries({
+        include: "all",
+      });
+    },
+  });
 
-  const tagOptions = tagData?.tags?.map((tag) => tag.name) || [];
+  const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
+  const debouncedTagInput = useDebounce(tagInput, 400);
+
+  const { data: tagSearchData } = useQuery(SearchTags, {
+    variables: {
+      search: debouncedTagInput,
+    },
+    skip: debouncedTagInput.length < 1,
+  });
 
   useEffect(() => {
     if (recipe) {
@@ -52,13 +66,13 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
 
       setIngredients(
         recipe.ingredients?.length
-          ? recipe.ingredients.map(ing=>{
-            return {
-              name: ing?.ingredient?.name,
-              quantity: ing.quantity,
-              unit: ing.unit
-            }
-          })
+          ? recipe.ingredients.map((ing) => {
+              return {
+                name: ing?.ingredient?.name,
+                quantity: ing.quantity,
+                unit: ing.unit,
+              };
+            })
           : [
               {
                 name: "",
@@ -68,7 +82,7 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
             ],
       );
 
-      setSelectedTags(recipe.tags?.map((tag) => tag.name) || []);
+      setTags(recipe.tags?.map((tag) => tag.name) || []);
     }
   }, [recipe]);
 
@@ -91,18 +105,12 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
 
   const handleIngredientChange = (index, field, value) => {
     const updated = [...ingredients];
-
-    updated[index] = {
-      ...updated[index],
-      ingredient: {[field]: value}
-    };
-
+    updated[index][field] = value;
     setIngredients(updated);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async () => {
     try {
-      event.preventDefault();
       await updateRecipe({
         variables: {
           id: Number(recipe.id),
@@ -118,7 +126,7 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
               quantity: Number(item.quantity),
               unit: item.unit,
             })),
-          tags: selectedTags,
+          tags: tags,
         },
       });
       onClose();
@@ -182,38 +190,25 @@ const EditRecipeModal = ({ open, onClose, recipe }) => {
 
             <Autocomplete
               multiple
-              freeSolo
-              options={tagOptions}
-              value={selectedTags}
-              onChange={(e, newValue) => setSelectedTags(newValue)}
+              options={tagSearchData?.searchTags || []}
+              value={tags}
+              inputValue={tagInput}
+              onInputChange={(e, value) => setTagInput(value)}
+              onChange={(e, value) => setTags(value)}
               renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip
-                    label={option}
-                    {...getTagProps({ index })}
-                    key={index}
-                  />
-                ))
+                value.map((option, index) => {
+                  const { key, ...tagProps } = getTagProps({ index });
+                  return <Chip key={key} label={option} {...tagProps} />;
+                })
               }
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label="Select or create tags"
-                  placeholder="Add tags"
-                  InputProps={{
-                    ...params.InputProps,
-                    endAdornment: (
-                      <>
-                        {tagsLoading ? (
-                          <CircularProgress color="inherit" size={18} />
-                        ) : null}
-
-                        {params?.InputProps?.endAdornment}
-                      </>
-                    ),
-                  }}
+                  label="Tags"
+                  placeholder="Type tags..."
                 />
               )}
+              sx={{ width: "100%" }}
             />
           </Box>
 

@@ -16,14 +16,14 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import { useMutation, useQuery } from "@apollo/client/react";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client/react";
 import { useState } from "react";
 import { CreateRecipe } from "../GraphQl/mutation";
-import { MyRecipes, Recipes } from "../GraphQl/query"; 
 import { SearchTags } from "../GraphQl/query";
 import { useDebounce } from "../Hook/useDebounce";
 
 const CreateRecipeModal = ({ open, onClose }) => {
+  const client = useApolloClient();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [cookingTime, setCookingTime] = useState(0);
@@ -45,10 +45,11 @@ const CreateRecipeModal = ({ open, onClose }) => {
   });
 
   const [createRecipe, { loading }] = useMutation(CreateRecipe, {
-    refetchQueries: [
-      { query: MyRecipes },
-      { query: Recipes }
-    ]
+    onCompleted: async()=>{
+      await client.refetchQueries({
+        include: "all",
+      });
+    }
   });
 
   const addIngredient = () => {
@@ -91,8 +92,9 @@ const CreateRecipeModal = ({ open, onClose }) => {
       setTagInput(""); 
 
       onClose();
-    } catch (err) {
-      console.error(err);
+    }
+    catch(err){
+      console.log(err)
     }
   };
 
@@ -150,7 +152,6 @@ const CreateRecipeModal = ({ open, onClose }) => {
             <Typography mb={1}>Tags</Typography>
             <Autocomplete
               multiple
-              freeSolo
               options={tagData?.searchTags || []}
               value={tags}
               inputValue={tagInput}
@@ -223,6 +224,15 @@ const CreateRecipeModal = ({ open, onClose }) => {
                         "quantity",
                         Number(e.target.value),
                       )
+                    }
+                  />
+
+                  <TextField
+                    label="Unit"
+                    sx={{ width: 140 }}
+                    value={ingredient.unit || ""}
+                    onChange={(e) =>
+                      handleIngredientChange(index, "unit", e.target.value)
                     }
                   />
                   

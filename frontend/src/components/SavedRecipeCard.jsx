@@ -11,13 +11,12 @@ import {
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client/react";
+import { useMutation } from "@apollo/client/react";
 import { UnSaveRecipe } from "../GraphQl/mutation";
 import NoteModal from "./NoteModal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 import { useNavigate } from "react-router-dom";
-import { MySavedRecipes } from "../GraphQl/query";
+import { useState } from "react";
 
 const SavedRecipeCard = ({ recipe, savedRecipeId, savedData }) => {
   const navigate = useNavigate();
@@ -48,18 +47,14 @@ const SavedRecipeCard = ({ recipe, savedRecipeId, savedData }) => {
     handleMenuClose();
   };
 
-  const {data: mysavedata, refetch} = useQuery(MySavedRecipes)
-
   const [removeRecipe] = useMutation(UnSaveRecipe, {
-    onCompleted: () => {
+    onCompleted: async () => {
       setDeleteOpen(false);
-      refetch();
-    },
+      if (typeof savedData === "function") {
+      await savedData();
+    }
+    }
   });
-
-  useEffect(()=>{
-    refetch()
-  }, [mysavedata])
 
   return (
     <>
@@ -102,7 +97,7 @@ const SavedRecipeCard = ({ recipe, savedRecipeId, savedData }) => {
               color: "#2E7D32",
               fontWeight: 600,
             }}
-            onClick={() => navigate(`/recipe/${recipe.id}`, { state: { triggerRefetch: true } })}
+            onClick={() => navigate(`/recipe/${recipe.id}`)}
           >
             View Recipe
           </Button>

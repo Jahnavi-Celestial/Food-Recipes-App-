@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client/react";
+import { useApolloClient, useQuery } from "@apollo/client/react";
 import { FilterRecipes, SearchTags } from "../GraphQl/query";
 import {
   Box,
@@ -16,6 +16,7 @@ import { useDebounce } from "../Hook/useDebounce";
 import SavedRecipeCard from "../components/SavedRecipeCard";
 
 const SavedRecipes = () => {
+  const client = useApolloClient();
   const [search, setSearch] = useState("");
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
@@ -61,9 +62,18 @@ const SavedRecipes = () => {
       limit: itemsPerPage,
       skip: (page - 1) * itemsPerPage,
     },
+    onCompleted: async()=>{
+       await client.refetchQueries({
+        include: "all", 
+      });
+    }
   });
 
   const recipes = data?.filterRecipes || [];
+
+  useEffect(()=>{
+    savedData();
+  },[recipes])
 
   const { data: tagData } = useQuery(SearchTags, {
     variables: {
@@ -71,10 +81,6 @@ const SavedRecipes = () => {
     },
     skip: debouncedTagInput.length < 1,
   });
-
-  useState(() => {
-    savedData();
-  }, data);
 
   if (loading) {
     return (
@@ -100,10 +106,11 @@ const SavedRecipes = () => {
         p: 3,
         mt: 8,
         background: "linear-gradient(to bottom right, #E8F5E9, #FFFFFF)",
+        minHeight: "80vh"
       }}
     >
       <Typography variant="h4" mb={3} sx={{ pb: "20px", ml: 10 }}>
-        Recipes
+        Saved Recipes
       </Typography>
 
       <Box
@@ -187,13 +194,13 @@ const SavedRecipes = () => {
           mt: 3,
         }}
       >
-        {recipes.length != 0 ? (
-          recipes.map((recipe) => (
+        {recipes?.length !== 0 ? (
+          recipes?.map((recipe) => (
             <SavedRecipeCard
               key={recipe.id}
               recipe={recipe}
               savedRecipeId={recipe?.savedBy?.[0].id}
-              refetch={savedData}
+              savedData={savedData}
             />
           ))
         ) : (
@@ -223,10 +230,10 @@ const SavedRecipes = () => {
       >
         <Box sx={{ flex: 1 }} />
 
-        {recipes.length != 0 ? (
+        {recipes?.length != 0 ? (
           <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
             <Pagination
-              count={recipes.length < itemsPerPage ? page : page + 1}
+              count={recipes?.length < itemsPerPage ? page : page + 1}
               page={page}
               onChange={(e, v) => setPage(v)}
             />
@@ -235,7 +242,7 @@ const SavedRecipes = () => {
           ""
         )}
 
-        {recipes.length != 0 ? (
+        {recipes?.length != 0 ? (
           <Box
             sx={{
               flex: 1,

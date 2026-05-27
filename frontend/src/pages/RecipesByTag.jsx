@@ -13,8 +13,10 @@ import {
 } from "@mui/material";
 
 import { RecipeByTags } from "../GraphQl/query";
+import { useAuth } from "../context/AuthContext";
 
 const RecipesByTagPage = () => {
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate()
   const location = useLocation();
 
@@ -25,6 +27,15 @@ const RecipesByTagPage = () => {
       tags: tags?.map((t) => t?.trim()),
     },
   });
+
+  function handleNavigate(recipe){
+    if (isAuthenticated || recipe.is_public === true) {
+      navigate(`/recipe/${recipe.id}`);
+    }
+    else if(!isAuthenticated && !recipe.is_public){
+      alert("You are not logged in or recipe is private")
+    }
+  }
 
   const recipes = data?.recipeByTags || [];
 
@@ -58,7 +69,7 @@ const RecipesByTagPage = () => {
       ) : (
         <Stack spacing={2}>
           {recipes.map((recipe) => (
-            <Card key={recipe.id} sx={{ display: "flex" }} onClick={()=>navigate(`/recipe/${recipe.id}`, { state: { triggerRefetch: true }})}>
+            <Card key={recipe.id} sx={{ display: "flex" }} onClick={() => handleNavigate(recipe)}>
               {recipe.image && (
                 <CardMedia
                   component="img"

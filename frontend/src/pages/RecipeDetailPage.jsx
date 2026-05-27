@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client/react";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client/react";
 import {
   Box,
   Chip,
@@ -14,13 +14,14 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { MySavedRecipes, RecipeDetail } from "../GraphQl/query";
 import { useAuth } from "../context/AuthContext";
 import { SaveRecipe, UnSaveRecipe } from "../GraphQl/mutation";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 const RecipeDetailPage = () => {
+  const client = useApolloClient();
   const { isAuthenticated } = useAuth();
   const { id } = useParams();
 
@@ -30,10 +31,18 @@ const RecipeDetailPage = () => {
 
   const {data: savedData, refetch: refetchSaved} = useQuery(MySavedRecipes,{skip: !isAuthenticated})
   const [saveMutation] = useMutation(SaveRecipe, {
-    onCompleted: ()=>{refetchSaved()}
+    onCompleted: async()=>{
+      await client.refetchQueries({
+      include: "active", 
+    });
+    }
   })
   const [unsaveMutation] = useMutation(UnSaveRecipe,  {
-    onCompleted: ()=>{refetchSaved()},
+    onCompleted: async()=>{
+      await client.refetchQueries({
+      include: "active", 
+    });
+    }
   })
 
   const isSaved = useMemo(()=>{
@@ -45,25 +54,15 @@ const RecipeDetailPage = () => {
     try{
         if(isSaved){
             await unsaveMutation({variables: {recipe_id: Number(id)}})
-            refetchSaved({ status: 'ACTIVE' });
         }
         else{
             await saveMutation({variables: {recipe_id: Number(id)}})
-            refetchSaved({ status: 'ACTIVE' });
         }
         refetchSaved({ status: 'ACTIVE' });
     }catch(err){
         console.log(err.message)
     }
   }
-
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.state?.triggerRefetch) {
-      refetchSaved({status: "ACTIVE"});
-    }
-  }, [location.state, refetchSaved]);
 
   if (loading) {
       return (

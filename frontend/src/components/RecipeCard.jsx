@@ -26,8 +26,11 @@ const RecipeCard = ({ recipe, canEdit, refetch }) => {
   });
 
   const handleViewBtn = () => {
-    if (isAuthenticated || recipe.is_public == true) {
-      navigate(`/recipe/${recipe.id}`, { state: { triggerRefetch: true }});
+    if (isAuthenticated || recipe.is_public === true) {
+      navigate(`/recipe/${recipe.id}`);
+    }
+    else if(!isAuthenticated && recipe.is_public === false){
+      alert("You are not logged in or recipe is private")
     }
   };
 

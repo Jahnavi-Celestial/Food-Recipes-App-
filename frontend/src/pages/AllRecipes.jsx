@@ -96,6 +96,7 @@ const AllRecipes = () => {
         p: 3,
         mt: 8,
         background: "linear-gradient(to bottom right, #E8F5E9, #FFFFFF)",
+        minHeight: "80vh"
       }}
     >
       <Typography variant="h4" mb={3} sx={{ pb: "20px", ml: 10}}>
