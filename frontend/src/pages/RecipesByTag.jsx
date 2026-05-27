@@ -16,7 +16,7 @@ import { RecipeByTags } from "../GraphQl/query";
 import { useAuth } from "../context/AuthContext";
 
 const RecipesByTagPage = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, userId } = useAuth();
   const navigate = useNavigate()
   const location = useLocation();
 
@@ -29,10 +29,13 @@ const RecipesByTagPage = () => {
   });
 
   function handleNavigate(recipe){
-    if (isAuthenticated || recipe.is_public === true) {
+    if (recipe.is_public === true) {
       navigate(`/recipe/${recipe.id}`);
     }
-    else if(!isAuthenticated && !recipe.is_public){
+    else if(!recipe.is_public && recipe.user_id === Number(userId)){
+      navigate(`/recipe/${recipe.id}`);
+    }
+    else{
       alert("You are not logged in or recipe is private")
     }
   }

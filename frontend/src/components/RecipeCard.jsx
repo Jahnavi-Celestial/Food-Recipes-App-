@@ -17,7 +17,7 @@ import { DeleteRecipe } from "../GraphQl/mutation";
 const RecipeCard = ({ recipe, canEdit, refetch }) => {
   const [EditOpen, setEditOpen] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, userId } = useAuth();
 
   const [deleteRecipe] = useMutation(DeleteRecipe,{
     onCompleted:() => {
@@ -26,10 +26,13 @@ const RecipeCard = ({ recipe, canEdit, refetch }) => {
   });
 
   const handleViewBtn = () => {
-    if (isAuthenticated || recipe.is_public === true) {
+    if (recipe.is_public === true) {
       navigate(`/recipe/${recipe.id}`);
     }
-    else if(!isAuthenticated && recipe.is_public === false){
+    else if(!recipe.is_public && recipe.user_id === Number(userId)){
+      navigate(`/recipe/${recipe.id}`);
+    }
+    else{
       alert("You are not logged in or recipe is private")
     }
   };
